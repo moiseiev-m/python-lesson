@@ -54,11 +54,11 @@ const router = createRouter({
 			name: 'dictionaries',
 			component: () => import('../views/DictionariesView.vue'),
 		},
-		{
-			path: '/search',
-			name: 'search',
-			component: () => import('../views/SearchView.vue'),
-		},
+		// {
+		// 	path: '/search',
+		// 	name: 'search',
+		// 	component: () => import('../views/SearchView.vue'),
+		// },
 	],
 });
 

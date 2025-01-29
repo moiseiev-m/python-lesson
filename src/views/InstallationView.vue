@@ -6,85 +6,72 @@
 					<v-card-title class="text-h4 font-weight-bold text-center py-4"> Встановлення Python </v-card-title>
 
 					<v-card-text class="text-body-1">
-						<v-tabs v-model="tab" color="primary">
+						<h2 class="text-h5 mb-5">Програмувати в браузері!</h2>
+						<p class="mb-4">
+							<a href="https://ed-info.github.io/epython/" target="_blank">ЄPython - програмувати просто! - https://ed-info.github.io/epython/</a>
+						</p>
+						<p class="mb-4">Перш ніж почати програмувати на Python, потрібно встановити інтерпретатор Python на ваш комп'ютер. Процес встановлення залежить від операційної системи.</p>
+												
+						<v-tabs v-model="tab" class="mb-4">
 							<v-tab value="windows">Windows</v-tab>
 							<v-tab value="mac">macOS</v-tab>
-							<v-tab value="linux">Linux</v-tab>
 						</v-tabs>
 
-						<v-window v-model="tab" class="mt-4">
+						<v-window v-model="tab">
 							<v-window-item value="windows">
-								<h3 class="text-h6 mb-3">Встановлення Python на Windows</h3>
+								<h3 class="text-h6 mb-4">Встановлення Python на Windows</h3>
 								<ol class="mb-4">
-									<li>Перейдіть на офіційний сайт Python: <a href="https://www.python.org/downloads/" target="_blank">python.org</a></li>
-									<li>Натисніть кнопку "Download Python" з останньою версією</li>
-									<li>Запустіть завантажений інсталятор</li>
-									<li>Обов'язково поставте галочку "Add Python to PATH"</li>
+									<li class="mb-2">Перейдіть на офіційний сайт Python: <a href="https://www.python.org/downloads/" target="_blank">python.org/downloads</a></li>
+									<li class="mb-2">Завантажте останню версію Python для Windows</li>
+									<li class="mb-2">Запустіть інсталятор</li>
+									<li class="mb-2">
+										<strong>Важливо:</strong> Відмітьте галочку "Add Python to PATH" перед встановленням
+									</li>
 									<li>Натисніть "Install Now"</li>
 								</ol>
-								<v-alert type="info" title="Перевірка встановлення" class="mb-4">
-									Відкрийте командний рядок (cmd) і введіть команду:
-									<v-code>python --version</v-code>
-								</v-alert>
+								<p class="mb-4">Щоб перевірити встановлення, відкрийте командний рядок (cmd) і введіть:</p>
+								<v-sheet color="grey-lighten-4" class="pa-4 mb-4 rounded">
+									<pre><code>python --version</code></pre>
+								</v-sheet>
 							</v-window-item>
 
 							<v-window-item value="mac">
-								<h3 class="text-h6 mb-3">Встановлення Python на macOS</h3>
-								<p class="mb-4">На macOS Python зазвичай вже встановлений, але краще встановити останню версію:</p>
+								<h3 class="text-h6 mb-4">Встановлення Python на macOS</h3>
+								<p class="mb-4">macOS зазвичай поставляється з Python, але це може бути застаріла версія. Рекомендується встановити нову версію через Homebrew:</p>
 								<ol class="mb-4">
-									<li>
-										Встановіть Homebrew (якщо ще не встановлено):
-										<v-code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</v-code>
+									<li class="mb-2">
+										Спочатку встановіть Homebrew, якщо він ще не встановлений. Відкрийте Terminal і введіть:
+										<v-sheet color="grey-lighten-4" class="pa-4 my-2 rounded">
+											<pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre>
+										</v-sheet>
 									</li>
-									<li>
-										Встановіть Python через Homebrew:
-										<v-code>brew install python</v-code>
+									<li class="mb-2">
+										Після встановлення Homebrew, встановіть Python:
+										<v-sheet color="grey-lighten-4" class="pa-4 my-2 rounded">
+											<pre><code>brew install python</code></pre>
+										</v-sheet>
 									</li>
 								</ol>
-								<v-alert type="info" title="Перевірка встановлення" class="mb-4">
-									Відкрийте Terminal і введіть команду:
-									<v-code>python3 --version</v-code>
-								</v-alert>
-							</v-window-item>
-
-							<v-window-item value="linux">
-								<h3 class="text-h6 mb-3">Встановлення Python на Linux</h3>
-								<p class="mb-4">На більшості дистрибутивів Linux Python вже встановлений. Для встановлення останньої версії:</p>
-								<h4 class="text-subtitle-1 mb-2">Ubuntu/Debian:</h4>
-								<v-code class="mb-4">
-									sudo apt update<br />
-									sudo apt install python3
-								</v-code>
-
-								<h4 class="text-subtitle-1 mb-2">Fedora:</h4>
-								<v-code class="mb-4"> sudo dnf install python3 </v-code>
-
-								<v-alert type="info" title="Перевірка встановлення" class="mb-4">
-									Відкрийте термінал і введіть команду:
-									<v-code>python3 --version</v-code>
-								</v-alert>
+								<p class="mb-4">Щоб перевірити встановлення, відкрийте Terminal і введіть:</p>
+								<v-sheet color="grey-lighten-4" class="pa-4 mb-4 rounded">
+									<pre><code>python3 --version</code></pre>
+								</v-sheet>
 							</v-window-item>
 						</v-window>
 
-						<h3 class="text-h6 mt-6 mb-3">Встановлення редактора коду</h3>
-						<p class="mb-4">Для написання коду на Python вам знадобиться редактор коду. Ми рекомендуємо:</p>
-						<v-list>
-							<v-list-item prepend-icon="mdi-microsoft-visual-studio-code" title="Visual Studio Code" subtitle="Безкоштовний, легкий та потужний редактор коду від Microsoft">
-								<template v-slot:append>
-									<v-btn color="primary" variant="text" href="https://code.visualstudio.com/" target="_blank"> Завантажити </v-btn>
-								</template>
-							</v-list-item>
+						
 
-							<v-list-item prepend-icon="mdi-language-python" title="PyCharm" subtitle="Професійне IDE для Python від JetBrains">
-								<template v-slot:append>
-									<v-btn color="primary" variant="text" href="https://www.jetbrains.com/pycharm/" target="_blank"> Завантажити </v-btn>
-								</template>
-							</v-list-item>
-						</v-list>
+						<v-alert
+							color="info"
+							icon="mdi-lightbulb"
+							title="Порада"
+							text="Після встановлення Python, рекомендується також встановити IDE (інтегроване середовище розробки) або текстовий редактор з підтримкою Python, наприклад, Visual Studio Code або PyCharm"
+							class="mb-4"
+						></v-alert>
 					</v-card-text>
 
 					<v-card-actions class="justify-center pa-4">
-						<v-btn color="primary" size="large" to="/basics" prepend-icon="mdi-arrow-right"> Перейти до основ Python </v-btn>
+						<v-btn color="primary" size="large" to="/basics" prepend-icon="mdi-arrow-right"> Перейти до основ </v-btn>
 					</v-card-actions>
 				</v-card>
 			</v-col>
@@ -93,19 +80,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const tab = ref('windows');
+const tab = ref('windows')
 </script>
 
 <style scoped>
-.v-code {
-	background-color: #f5f5f5;
-	padding: 1rem;
-	border-radius: 4px;
-	font-family: monospace;
+pre {
+	margin: 0;
 	white-space: pre-wrap;
-	display: block;
-	margin: 0.5rem 0;
+	word-wrap: break-word;
+	font-family: monospace;
+}
+code {
+	color: #24292e;
 }
 </style>

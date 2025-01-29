@@ -1,3 +1,6 @@
+<script setup>
+</script>
+
 <template>
 	<v-container>
 		<v-row justify="center">
@@ -46,7 +49,7 @@ width = 3
 area = length * width
 
 # Виведення результату
-print(f"Площа прямокутника: {area}")</code></pre>
+print('Площа прямокутника:', area)</code></pre>
 						</v-sheet>
 
 						<v-alert
@@ -56,18 +59,6 @@ print(f"Площа прямокутника: {area}")</code></pre>
 							text="Пишіть зрозумілий код. Хороший код повинен бути самодокументованим - його легко читати і розуміти без додаткових пояснень"
 							class="mb-4"
 						></v-alert>
-
-						<h2 class="text-h5 mb-4">Python інтерпретатор</h2>
-						<p class="mb-4">Python - це інтерпретована мова. Це означає, що код виконується рядок за рядком. Ви можете використовувати інтерактивний режим Python для експериментів з кодом:</p>
-						<v-sheet color="grey-lighten-4" class="pa-4 mb-4 rounded">
-							<pre><code>$ python
-Python 3.9.5 (default, May  4 2021, 03:33:11) 
->>> print("Привіт!")
-Привіт!
->>> 2 + 2
-4
->>> exit()</code></pre>
-						</v-sheet>
 					</v-card-text>
 
 					<v-card-actions class="justify-center pa-4">
