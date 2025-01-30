@@ -35,3 +35,9 @@ import TheWelcome from '../components/TheWelcome.vue';
 		</v-row>
 	</v-container>
 </template>
+<style scoped>
+:deep(.v-card-title) {
+	white-space: normal !important;
+	word-wrap: break-word;
+}
+</style>

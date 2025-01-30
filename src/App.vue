@@ -2,6 +2,15 @@
 import { ref, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useDisplay } from 'vuetify';
+import { useTheme } from 'vuetify';
+
+const theme = useTheme();
+const isDark = ref(theme.global.current.value.dark);
+
+const toggleTheme = () => {
+	theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
+	isDark.value = !isDark.value;
+};
 
 const drawer = ref(null);
 const router = useRouter();
@@ -14,6 +23,7 @@ const menuItems = [
 	{ title: 'Встановлення Python', icon: 'mdi-download', to: '/installation' },
 	{ title: 'Основи Python', icon: 'mdi-language-python', to: '/basics' },
 	{ title: 'Змінні та типи даних', icon: 'mdi-variable', to: '/variables' },
+	{ title: 'Тестові завдання', icon: 'mdi-test-tube', to: '/tests' },
 	// { title: 'Умовні конструкції', icon: 'mdi-code-brackets', to: '/conditions' },
 	// { title: 'Цикли', icon: 'mdi-refresh', to: '/loops' },
 	// { title: 'Функції', icon: 'mdi-function', to: '/functions' },
@@ -55,6 +65,9 @@ const isCurrentRoute = computed(() => (path) => {
 				<span :class="mobile ? 'text-subtitle-1' : 'text-h6'">Python підказки</span>
 			</v-app-bar-title>
 			<v-spacer></v-spacer>
+			<v-btn icon @click="toggleTheme" :title="isDark ? 'Світла тема' : 'Темна тема'">
+				<v-icon>{{ isDark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent' }}</v-icon>
+			</v-btn>
 		</v-app-bar>
 
 		<v-main :class="mdAndUp ? 'ml-300' : ''">
@@ -70,6 +83,8 @@ const isCurrentRoute = computed(() => (path) => {
 </template>
 
 <style>
+@import './assets/code.css';
+
 .v-container {
 	max-width: 100% !important;
 	width: 100% !important;
@@ -92,42 +107,176 @@ const isCurrentRoute = computed(() => (path) => {
 }
 
 /* Стилі для блоків коду */
-pre {
-	background: #f8f9fa;
-	border: 1px solid #e9ecef;
-	border-radius: 4px;
-	padding: 15px;
-	margin: 15px 0;
-	overflow-x: auto;
-	font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-	font-size: 14px;
-	line-height: 1.5;
-}
-
-pre code {
-	color: #24292e;
+.code-block {
+	margin: 20px 0;
+	border-radius: 8px;
+	overflow: hidden;
+	background-color: rgb(var(--v-theme-surface));
 }
 
 .code-header {
-	background: #e9ecef;
-	padding: 8px 15px;
-	border-radius: 4px 4px 0 0;
-	border: 1px solid #e9ecef;
-	border-bottom: none;
-	font-family: 'Segoe UI', system-ui, sans-serif;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 8px 16px;
+	background-color: rgb(var(--v-theme-surface-variant));
+	font-family: system-ui, -apple-system, sans-serif;
 	font-size: 13px;
-	color: #6c757d;
+	color: rgb(var(--v-theme-on-surface-variant));
 }
 
-.code-block {
-	margin: 20px 0;
+pre {
+	margin: 0;
+	padding: 16px;
+	background-color: rgb(var(--v-theme-surface));
+	overflow-x: auto;
+	font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+	font-size: 14px;
+	line-height: 1.5;
+	color: rgb(var(--v-theme-on-surface));
+}
+
+pre code {
+	color: inherit;
+	display: block;
+	padding: 0;
+	font-family: inherit;
 }
 
 .line-numbers {
-	color: #6c757d;
-	padding-right: 15px;
-	border-right: 1px solid #e9ecef;
+	color: rgb(var(--v-theme-on-surface-variant));
+	padding-right: 16px;
+	border-right: 1px solid rgba(var(--v-theme-on-surface), 0.12);
 	text-align: right;
 	user-select: none;
+	min-width: 40px;
+}
+
+/* Стилі для підсвічування синтаксису */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #6a737d;
+}
+
+.token.punctuation {
+	color: #24292e;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #005cc5;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #032f62;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+	color: #d73a49;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+	color: #d73a49;
+}
+
+.token.function,
+.token.class-name {
+	color: #6f42c1;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+	color: #24292e;
+}
+
+/* Темна тема */
+.v-theme--dark {
+	.token.comment,
+	.token.prolog,
+	.token.doctype,
+	.token.cdata {
+		color: #8b949e;
+	}
+
+	.token.punctuation {
+		color: #c9d1d9;
+	}
+
+	.token.property,
+	.token.tag,
+	.token.boolean,
+	.token.number,
+	.token.constant,
+	.token.symbol,
+	.token.deleted {
+		color: #79c0ff;
+	}
+
+	.token.selector,
+	.token.attr-name,
+	.token.string,
+	.token.char,
+	.token.builtin,
+	.token.inserted {
+		color: #a5d6ff;
+	}
+
+	.token.operator,
+	.token.entity,
+	.token.url,
+	.language-css .token.string,
+	.style .token.string {
+		color: #ff7b72;
+	}
+
+	.token.atrule,
+	.token.attr-value,
+	.token.keyword {
+		color: #ff7b72;
+	}
+
+	.token.function,
+	.token.class-name {
+		color: #d2a8ff;
+	}
+
+	.token.regex,
+	.token.important,
+	.token.variable {
+		color: #c9d1d9;
+	}
+
+	.code-block {
+		background-color: rgb(var(--v-theme-surface));
+	}
+
+	pre {
+		background-color: rgb(var(--v-theme-surface));
+		color: rgb(var(--v-theme-on-surface));
+	}
+
+	.code-header {
+		background-color: rgb(var(--v-theme-surface-variant));
+		color: rgb(var(--v-theme-on-surface-variant));
+	}
 }
 </style>

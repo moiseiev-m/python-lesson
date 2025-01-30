@@ -11,7 +11,7 @@
 							<a href="https://ed-info.github.io/epython/" target="_blank">ЄPython - програмувати просто! - https://ed-info.github.io/epython/</a>
 						</p>
 						<p class="mb-4">Перш ніж почати програмувати на Python, потрібно встановити інтерпретатор Python на ваш комп'ютер. Процес встановлення залежить від операційної системи.</p>
-												
+
 						<v-tabs v-model="tab" class="mb-4">
 							<v-tab value="windows">Windows</v-tab>
 							<v-tab value="mac">macOS</v-tab>
@@ -24,9 +24,7 @@
 									<li class="mb-2">Перейдіть на офіційний сайт Python: <a href="https://www.python.org/downloads/" target="_blank">python.org/downloads</a></li>
 									<li class="mb-2">Завантажте останню версію Python для Windows</li>
 									<li class="mb-2">Запустіть інсталятор</li>
-									<li class="mb-2">
-										<strong>Важливо:</strong> Відмітьте галочку "Add Python to PATH" перед встановленням
-									</li>
+									<li class="mb-2"><strong>Важливо:</strong> Відмітьте галочку "Add Python to PATH" перед встановленням</li>
 									<li>Натисніть "Install Now"</li>
 								</ol>
 								<p class="mb-4">Щоб перевірити встановлення, відкрийте командний рядок (cmd) і введіть:</p>
@@ -59,8 +57,6 @@
 							</v-window-item>
 						</v-window>
 
-						
-
 						<v-alert
 							color="info"
 							icon="mdi-lightbulb"
@@ -72,6 +68,7 @@
 
 					<v-card-actions class="justify-center pa-4">
 						<v-btn color="primary" size="large" to="/basics" prepend-icon="mdi-arrow-right"> Перейти до основ </v-btn>
+						<v-btn color="primary" :href="pdfGuide" target="_blank" prepend-icon="mdi-file-pdf"> Завантажити інструкцію в PDF </v-btn>
 					</v-card-actions>
 				</v-card>
 			</v-col>
@@ -80,9 +77,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue';
 
-const tab = ref('windows')
+const tab = ref('windows');
 </script>
 
 <style scoped>
@@ -90,9 +87,40 @@ pre {
 	margin: 0;
 	white-space: pre-wrap;
 	word-wrap: break-word;
-	font-family: monospace;
+	font-family: 'Consolas', 'Monaco', monospace;
+	font-size: 14px;
+	line-height: 1.5;
+	max-width: 100%;
+	overflow-x: auto;
+	padding: 0;
 }
+
 code {
-	color: #24292e;
+	color: rgb(var(--v-theme-on-surface));
+	display: block;
+	max-width: 100%;
+	overflow-x: auto;
+	font-family: inherit;
+}
+
+.v-sheet {
+	max-width: 100%;
+	overflow-x: auto;
+	border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
+}
+
+.text-body-1 {
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+a {
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+:deep(.v-card-title) {
+	white-space: normal !important;
+	word-wrap: break-word;
 }
 </style>

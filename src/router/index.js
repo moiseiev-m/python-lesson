@@ -1,5 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
+import IntroView from '../views/IntroView.vue';
+import InstallationView from '../views/InstallationView.vue';
+import BasicsView from '../views/BasicsView.vue';
+import VariablesView from '../views/VariablesView.vue';
+import TestsView from '../views/TestsView.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,53 +17,28 @@ const router = createRouter({
 		{
 			path: '/intro',
 			name: 'intro',
-			component: () => import('../views/IntroView.vue'),
+			component: IntroView,
 		},
 		{
 			path: '/installation',
 			name: 'installation',
-			component: () => import('../views/InstallationView.vue'),
+			component: InstallationView,
 		},
 		{
 			path: '/basics',
 			name: 'basics',
-			component: () => import('../views/BasicsView.vue'),
+			component: BasicsView,
 		},
 		{
 			path: '/variables',
 			name: 'variables',
-			component: () => import('../views/VariablesView.vue'),
+			component: VariablesView,
 		},
 		{
-			path: '/conditions',
-			name: 'conditions',
-			component: () => import('../views/ConditionsView.vue'),
+			path: '/tests',
+			name: 'tests',
+			component: TestsView,
 		},
-		{
-			path: '/loops',
-			name: 'loops',
-			component: () => import('../views/LoopsView.vue'),
-		},
-		{
-			path: '/functions',
-			name: 'functions',
-			component: () => import('../views/FunctionsView.vue'),
-		},
-		{
-			path: '/lists',
-			name: 'lists',
-			component: () => import('../views/ListsView.vue'),
-		},
-		{
-			path: '/dictionaries',
-			name: 'dictionaries',
-			component: () => import('../views/DictionariesView.vue'),
-		},
-		// {
-		// 	path: '/search',
-		// 	name: 'search',
-		// 	component: () => import('../views/SearchView.vue'),
-		// },
 	],
 });
 
