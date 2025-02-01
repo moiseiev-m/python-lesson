@@ -23,12 +23,16 @@ const menuItems = [
 	{ title: 'Встановлення Python', icon: 'mdi-download', to: '/installation' },
 	{ title: 'Основи Python', icon: 'mdi-language-python', to: '/basics' },
 	{ title: 'Змінні та типи даних', icon: 'mdi-variable', to: '/variables' },
-	{ title: 'Тестові завдання', icon: 'mdi-test-tube', to: '/tests' },
-	// { title: 'Умовні конструкції', icon: 'mdi-code-brackets', to: '/conditions' },
-	// { title: 'Цикли', icon: 'mdi-refresh', to: '/loops' },
-	// { title: 'Функції', icon: 'mdi-function', to: '/functions' },
-	// { title: 'Списки та кортежі', icon: 'mdi-format-list-bulleted', to: '/lists' },
-	// { title: 'Словники', icon: 'mdi-dictionary', to: '/dictionaries' },
+	{
+		title: 'Практичні завдання',
+		icon: 'mdi-code-braces',
+		items: [
+			{ title: 'Консольні проєкти', to: '/practice/console' },
+			{ title: 'Консольні проєкти з розгалуженнями', to: '/practice/branches' },
+			{ title: 'Підпрограми', to: '/practice/functions' },
+			{ title: 'Віконні проєкти', to: '/practice/gui' },
+		],
+	},
 ];
 
 const isCurrentRoute = computed(() => (path) => {
@@ -40,21 +44,24 @@ const isCurrentRoute = computed(() => (path) => {
 	<v-app>
 		<v-navigation-drawer v-model="drawer" :permanent="mdAndUp" :temporary="!mdAndUp" :location="mdAndUp ? 'left' : 'start'" width="300">
 			<v-list nav density="compact">
-				<v-list-item
-					v-for="item in menuItems"
-					:key="item.title"
-					:to="item.to"
-					:prepend-icon="item.icon"
-					:title="item.title"
-					:active="isCurrentRoute(item.to)"
-					link
-					@click="mobile ? (drawer = false) : null"
-					class="rounded-lg mb-1"
-				>
-					<template v-slot:append v-if="isCurrentRoute(item.to)">
-						<v-icon color="primary" icon="mdi-check-circle"></v-icon>
-					</template>
-				</v-list-item>
+				<template v-for="item in menuItems" :key="item.title">
+					<v-list-group v-if="item.items">
+						<template v-slot:activator="{ props }">
+							<v-list-item v-bind="props" :prepend-icon="item.icon" :title="item.title"></v-list-item>
+						</template>
+						<v-list-item v-for="subItem in item.items" :key="subItem.title" :to="subItem.to" :title="subItem.title" :active="isCurrentRoute(subItem.to)" link class="pl-4">
+							<template v-slot:append v-if="isCurrentRoute(subItem.to)">
+								<v-icon color="primary" icon="mdi-check-circle"></v-icon>
+							</template>
+						</v-list-item>
+					</v-list-group>
+
+					<v-list-item v-else :to="item.to" :prepend-icon="item.icon" :title="item.title" :active="isCurrentRoute(item.to)" link @click="mobile ? (drawer = false) : null" class="rounded-lg mb-1">
+						<template v-slot:append v-if="isCurrentRoute(item.to)">
+							<v-icon color="primary" icon="mdi-check-circle"></v-icon>
+						</template>
+					</v-list-item>
+				</template>
 			</v-list>
 		</v-navigation-drawer>
 
@@ -106,7 +113,26 @@ const isCurrentRoute = computed(() => (path) => {
 	margin: 0 !important;
 }
 
-/* Стилі для блоків коду */
+.v-list-item-title {
+	font-size: 16px !important;
+}
+
+.text-body-1 {
+	font-size: 14px !important;
+}
+
+.text-body-2 {
+	font-size: 12px !important;
+}
+
+.v-card-text {
+	font-size: 14px !important;
+}
+
+pre {
+	font-size: 12px !important;
+}
+
 .code-block {
 	margin: 20px 0;
 	border-radius: 8px;
@@ -152,7 +178,6 @@ pre code {
 	min-width: 40px;
 }
 
-/* Стилі для підсвічування синтаксису */
 .token.comment,
 .token.prolog,
 .token.doctype,
@@ -208,7 +233,6 @@ pre code {
 	color: #24292e;
 }
 
-/* Темна тема */
 .v-theme--dark {
 	.token.comment,
 	.token.prolog,
