@@ -1,5 +1,5 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue';
+// No imports needed
 </script>
 
 <template>
@@ -35,6 +35,7 @@ import TheWelcome from '../components/TheWelcome.vue';
 		</v-row>
 	</v-container>
 </template>
+
 <style scoped>
 :deep(.v-card-title) {
 	white-space: normal !important;

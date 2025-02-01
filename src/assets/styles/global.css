@@ -1,0 +1,59 @@
+/* Code formatting */
+pre {
+	margin: 0;
+	padding: 0;
+	background: transparent;
+}
+
+code {
+	font-family: 'Fira Code', monospace;
+	font-size: 0.9em;
+	padding: 0.2em 0.4em;
+	border-radius: 4px;
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
+pre code {
+	display: block;
+	padding: 1em;
+	overflow-x: auto;
+}
+
+/* Function items */
+.function-item {
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	border-radius: 4px;
+	transition: all 0.2s ease;
+}
+
+.function-item:hover {
+	background-color: rgba(0, 0, 0, 0.04);
+}
+
+.function-item :deep(.v-list-item-title) {
+	color: #4caf50;
+	text-decoration: none;
+}
+
+.function-item:hover :deep(.v-list-item-title) {
+	text-decoration: underline;
+}
+
+/* Operator groups */
+.operator-group {
+	margin-bottom: 2rem;
+}
+
+/* Tables */
+.v-table th.text-center {
+	width: 100px;
+}
+
+/* Common margins */
+.content-section {
+	margin-bottom: 2rem;
+}
+
+.content-section:last-child {
+	margin-bottom: 0;
+} 

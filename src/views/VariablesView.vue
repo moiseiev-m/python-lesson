@@ -1,97 +1,145 @@
 <script setup>
+import { ref } from 'vue';
 import variablesExamples from '@/assets/pdf/variables-examples.pdf';
+import BaseLayout from '@/components/BaseLayout.vue';
+import OperatorsTable from '@/components/OperatorsTable.vue';
+import FunctionsList from '@/components/FunctionsList.vue';
+import '@/assets/styles/global.css';
+
+const functions = ref([
+	{
+		name: 'float()',
+		shortDesc: 'Перетворює значення в число з плаваючою комою',
+		description: 'Функція float() перетворює рядок або число в число з плаваючою комою (дробове число). Може приймати рядки, що містять десяткові числа, та цілі числа.',
+		syntax: 'float(x)',
+		example: `# Перетворення рядка в число
+price = float("23.45")
+print(price)
+
+# Перетворення цілого числа
+value = float(42)
+print(value)`,
+		output: `23.45
+42.0`,
+		dialog: false,
+	},
+	{
+		name: 'int()',
+		shortDesc: 'Перетворює значення в ціле число',
+		description: 'Функція int() перетворює рядок або число з плаваючою комою в ціле число. При перетворенні дробового числа дробова частина відкидається.',
+		syntax: 'int(x)',
+		example: `# Перетворення рядка в ціле число
+age = int("25")
+print(age)
+
+# Перетворення дробового числа
+value = int(3.9)
+print(value)`,
+		output: `25
+3`,
+		dialog: false,
+	},
+	{
+		name: 'str()',
+		shortDesc: 'Перетворює значення в рядок',
+		description: 'Функція str() перетворює будь-яке значення в рядковий тип даних. Може приймати числа, списки, словники та інші типи даних.',
+		syntax: 'str(x)',
+		example: `# Перетворення числа в рядок
+num = 42
+text = str(num)
+print(text)
+print(type(text))`,
+		output: `42
+<class 'str'>`,
+		dialog: false,
+	},
+	{
+		name: 'print()',
+		shortDesc: 'Виводить значення на екран',
+		description: 'Функція print() виводить передані їй значення на екран. Може приймати будь-яку кількість аргументів різних типів.',
+		syntax: 'print(*objects, sep=" ", end="\\n")',
+		example: `name = "Іван"
+age = 25
+print("Привіт,", name)
+print("Вік:", age, "років")`,
+		output: `Привіт, Іван
+Вік: 25 років`,
+		dialog: false,
+	},
+	{
+		name: 'input()',
+		shortDesc: 'Зчитує введення користувача',
+		description: "Функція input() зчитує рядок тексту, введений користувачем з клавіатури. Може приймати необов'язковий аргумент - підказку для користувача.",
+		syntax: 'input([prompt])',
+		example: `# Запит імені користувача
+name = input("Як вас звати? ")
+print("Привіт,", name)`,
+		output: `Як вас звати? Іван
+Привіт, Іван`,
+		dialog: false,
+	},
+	{
+		name: 'round()',
+		shortDesc: 'Округлює число',
+		description: 'Функція round() округлює число до вказаної кількості десяткових знаків. Якщо кількість знаків не вказана, округлює до найближчого цілого.',
+		syntax: 'round(number[, ndigits])',
+		example: `# Округлення до цілого
+print(round(3.7))
+print(round(3.2))
+
+# Округлення до 2 знаків
+print(round(3.14159, 2))`,
+		output: `4
+3
+3.14`,
+		dialog: false,
+	},
+]);
+
+const arithmeticOperators = [
+	{ operator: '+', operation: 'Додавання', example: '2 + 2 = 4' },
+	{ operator: '-', operation: 'Віднімання', example: '5 - 3 = 2' },
+	{ operator: '*', operation: 'Множення', example: '2 * 3 = 6' },
+	{ operator: '/', operation: 'Ділення', example: '6 / 2 = 3.0' },
+	{ operator: '//', operation: 'Цілочисельне ділення', example: '7 // 2 = 3' },
+	{ operator: '%', operation: 'Остача від ділення', example: '7 % 2 = 1' },
+	{ operator: '**', operation: 'Піднесення до степеня', example: '2 ** 3 = 8' },
+];
+
+const assignmentOperators = [
+	{ operator: '=', operation: 'Присвоєння', example: 'x = 5' },
+	{ operator: '+=', operation: 'Додавання з присвоєнням', example: 'x += 3' },
+	{ operator: '-=', operation: 'Віднімання з присвоєнням', example: 'x -= 2' },
+	{ operator: '*=', operation: 'Множення з присвоєнням', example: 'x *= 4' },
+	{ operator: '/=', operation: 'Ділення з присвоєнням', example: 'x /= 2' },
+];
+
+const comparisonOperators = [
+	{ operator: '==', operation: 'Рівність', example: '2 == 2' },
+	{ operator: '!=', operation: 'Нерівність', example: '2 != 3' },
+	{ operator: '>', operation: 'Більше', example: '5 > 3' },
+	{ operator: '<', operation: 'Менше', example: '3 < 5' },
+	{ operator: '>=', operation: 'Більше або рівне', example: '5 >= 5' },
+	{ operator: '<=', operation: 'Менше або рівне', example: '3 <= 3' },
+];
 </script>
 
 <template>
-	<v-container>
-		<v-row justify="center">
-			<v-col cols="12" md="10">
-				<v-card class="mx-auto" elevation="2">
-					<v-card-text class="text-body-1">
-						<v-card-title class="text-h4 font-weight-bold text-center py-4"> Змінні та типи даних </v-card-title>
-						<p class="mb-4">
-							<a href="https://ed-info.github.io/epython/" target="_blank">ЄPython - програмувати просто! - https://ed-info.github.io/epython/</a>
-						</p>
-						<h3 class="text-h6 mb-1">Ті фунції які ми будемо використовувати:</h3>
-						<p class="mb-1"><b>float()</b> - змінні цього типу можуть набувати як цілих, так і дробових значень;</p>
-						<p class="mb-1"><b>int()</b> - змінні цього типу можуть набувати тільки цілих значень;</p>
-						<p class="mb-1"><b>str()</b> - змінні цього типу можуть набувати тільки текстових значень;</p>
-						<p class="mb-1"><b>print()</b> - виводить текст на екран;</p>
-						<p class="mb-1"><b>input()</b> - зчитує введення з клавіатури;</p>
-						<p class="mb-6"><b>round()</b> - округлює число до найближчого цілого.</p>
-						<h2 class="text-h5 my-2">Приклад програми</h2>
-						<p class="mb-1">
-							На 1 м<sup>2</sup> площі клумби, що має довжину а та ширину b, припадає 4 саджанці. Потрібно порахувати довжину огорожі та кількість саджанців, які треба закупити.
-						</p>
-						<v-sheet color="grey-lighten-4" class="pa-4 mb-4 rounded">
-							<pre><code>a=int(input('Введіть довжину клумби: '))
-b=int(input('Введіть ширину клумби: '))
-p=2*(a+b)
-s=a*b
-k=s*4
-print('Довжина огорожі = ', p)
-print('Кількість саджанців = ', k)</code></pre>
-						</v-sheet>
+	<BaseLayout>
+		<template #title>
+			<h2 class="text-h4 mb-6">Змінні та типи даних в Python</h2>
+		</template>
 
-						<h2 class="text-h5 mb-4">Змінні в Python</h2>
-						<p class="mb-4">Змінна - це місце в пам'яті комп'ютера, де зберігається певне значення. В Python не потрібно оголошувати тип змінної - він визначається автоматично.</p>
-						<v-sheet color="grey-lighten-4" class="pa-4 mb-4 rounded">
-							<pre><code># Створення змінних
-name = "Іван"        # рядок
-age = 25            # ціле число
-height = 1.75       # число з плаваючою комою
-is_student = True   # логічне значення</code></pre>
-						</v-sheet>
+		<template #content>
+			<!-- Functions Section -->
+			<FunctionsList title="Вбудовані функції для роботи з типами даних" :functions="functions" />
 
-						<h2 class="text-h5 mb-1">Типи змінних величин</h2>
-						<p class="mb-1">Імена змінних у мові програмування Python можуть містити:</p>
-						<v-list class="mb-6">
-							<v-list-item prepend-icon="mdi-format-letter-case" title="Великі та малі літери" subtitle="Х і х - це різні змінні"></v-list-item>
-							<v-list-item prepend-icon="mdi-format-letter-case" title="Цифри" subtitle="Імена змінних не можуть починатися з цифри"></v-list-item>
-							<v-list-item
-								prepend-icon="mdi-format-letter-case"
-								title="Спеціальні символи"
-								subtitle="Імена змінних не можуть містити спеціальні символи, крім нижнього підкреслення (_)"
-							></v-list-item>
-						</v-list>
-
-						<h2 class="text-h5 my-4">Перетворення типів</h2>
-						<p class="mb-4">Python дозволяє перетворювати значення з одного типу в інший:</p>
-						<v-sheet color="grey-lighten-4" class="pa-4 mb-4 rounded">
-							<pre><code># Перетворення в рядок
-num = 42
-text = str(num)      # "42"
-
-# Перетворення в число
-text = "123"
-num = int(text)      # 123
-float_num = float("3.14")  # 3.14</code></pre>
-						</v-sheet>
-
-						<v-alert
-							color="info"
-							icon="mdi-alert"
-							title="Важливо!"
-							text="У математиці символ = означає «дорівнює». У багатьох мовах програмування, включаючи Python, цей символ використовується для позначення «присвоювання»."
-							class="mb-4"
-						></v-alert>
-						<v-alert
-							color="info"
-							icon="mdi-alert"
-							title="Важливо!"
-							text="Python - мова з динамічною типізацією. Одна і та ж змінна може містити значення різних типів в різний час виконання програми. Але це не означає, що типи не важливі - важливо розуміти, з яким типом даних ви працюєте в кожен момент часу."
-							class="mb-4"
-						></v-alert>
-					</v-card-text>
-
-					<v-card-actions class="justify-center pa-4">
-						<v-btn color="primary" size="large" to="/conditions" prepend-icon="mdi-arrow-right"> Перейти до умовних конструкцій </v-btn>
-						<v-btn color="secondary" :href="variablesExamples" target="_blank" prepend-icon="mdi-file-pdf"> Додаткові приклади </v-btn>
-					</v-card-actions>
-				</v-card>
-			</v-col>
-		</v-row>
-	</v-container>
+			<!-- Operators Section -->
+			<OperatorsTable title="Арифметичні оператори" :operators="arithmeticOperators" />
+			<OperatorsTable title="Оператори присвоєння" :operators="assignmentOperators" />
+			<OperatorsTable title="Оператори порівняння" :operators="comparisonOperators" />
+		</template>
+	</BaseLayout>
 </template>
 
 <style scoped>
@@ -103,5 +151,15 @@ pre {
 }
 code {
 	color: #24292e;
+}
+.function-item :deep(.v-list-item-title) {
+	color: #4caf50;
+	text-decoration: none;
+}
+.function-item:hover :deep(.v-list-item-title) {
+	text-decoration: underline;
+}
+.operator-group {
+	margin-bottom: 2rem;
 }
 </style>

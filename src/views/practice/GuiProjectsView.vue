@@ -10,38 +10,48 @@
 							<v-expansion-panel class="mb-4">
 								<v-expansion-panel-title class="text-h5 bg-green text-white"> Завдання 1. Калькулятор з графічним інтерфейсом </v-expansion-panel-title>
 								<v-expansion-panel-text>
-									<v-card class="mt-4" elevation="2">
-										<v-card-text class="pt-4">
-											<p class="text-h6 mb-4">
-												Створіть простий калькулятор з графічним інтерфейсом, який може виконувати базові арифметичні операції (додавання, віднімання, множення, ділення).
-											</p>
+									<p class="text-h6 mb-4">
+										Створіть простий калькулятор з графічним інтерфейсом, який може виконувати базові арифметичні операції (додавання, віднімання, множення, ділення).
+									</p>
 
-											<v-card class="my-4 pa-4" color="grey-lighten-4">
-												<div class="text-subtitle-1 mb-2">Необхідні компоненти:</div>
-												<v-list>
-													<v-list-item prepend-icon="mdi-check">
-														<v-list-item-title>Два поля для введення чисел</v-list-item-title>
-													</v-list-item>
-													<v-list-item prepend-icon="mdi-check">
-														<v-list-item-title>Кнопки для вибору операції</v-list-item-title>
-													</v-list-item>
-													<v-list-item prepend-icon="mdi-check">
-														<v-list-item-title>Поле для виведення результату</v-list-item-title>
-													</v-list-item>
-												</v-list>
-											</v-card>
+									<div class="d-flex mb-4">
+										<v-btn color="primary" @click="calculator.dialog = true">Перевірити розв'язок</v-btn>
+									</div>
 
-											<v-expand-transition>
-												<div>
-													<v-expansion-panels>
-														<v-expansion-panel>
-															<v-expansion-panel-title>
-																<v-icon color="success" class="mr-2">mdi-check-circle</v-icon>
-																Подивитися розв'язок
-															</v-expansion-panel-title>
-															<v-expansion-panel-text>
-																<v-sheet color="grey-lighten-4" class="pa-4 rounded">
-																	<pre><code>import tkinter as tk
+									<v-dialog v-model="calculator.dialog" width="600px">
+										<v-card>
+											<v-card-title class="text-h5">Перевірка розв'язку</v-card-title>
+											<v-card-text>
+												<v-card class="mb-4 pa-4" color="grey-lighten-4">
+													<div class="text-subtitle-1 mb-2">Необхідні компоненти:</div>
+													<v-list>
+														<v-list-item prepend-icon="mdi-check">
+															<v-list-item-title>Два поля для введення чисел</v-list-item-title>
+														</v-list-item>
+														<v-list-item prepend-icon="mdi-check">
+															<v-list-item-title>Кнопки для вибору операції</v-list-item-title>
+														</v-list-item>
+														<v-list-item prepend-icon="mdi-check">
+															<v-list-item-title>Поле для виведення результату</v-list-item-title>
+														</v-list-item>
+													</v-list>
+												</v-card>
+
+												<v-text-field
+													v-model="calculator.answer"
+													label="Введіть посилання на ваш код"
+													:error-messages="calculator.error"
+													@keyup.enter="checkCalculatorAnswer"
+												></v-text-field>
+
+												<v-expand-transition>
+													<div v-if="calculator.showSolution && calculator.isCorrect">
+														<div class="d-flex align-center mb-2">
+															<v-icon color="success" class="mr-2">mdi-check-circle</v-icon>
+															<span class="text-subtitle-1">Правильно! Ось приклад розв'язку:</span>
+														</div>
+														<v-sheet color="grey-lighten-4" class="pa-4 rounded">
+															<pre><code>import tkinter as tk
 from tkinter import ttk
 
 def calculate():
@@ -90,53 +100,61 @@ result_label = ttk.Label(window, text='Результат: ')
 result_label.pack(pady=5)
 
 window.mainloop()</code></pre>
-																</v-sheet>
-															</v-expansion-panel-text>
-														</v-expansion-panel>
-													</v-expansion-panels>
-												</div>
-											</v-expand-transition>
-										</v-card-text>
-									</v-card>
+														</v-sheet>
+													</div>
+												</v-expand-transition>
+											</v-card-text>
+											<v-card-actions>
+												<v-spacer></v-spacer>
+												<v-btn color="primary" @click="checkCalculatorAnswer">Перевірити</v-btn>
+												<v-btn color="grey" @click="calculator.dialog = false">Закрити</v-btn>
+											</v-card-actions>
+										</v-card>
+									</v-dialog>
 								</v-expansion-panel-text>
 							</v-expansion-panel>
 
 							<v-expansion-panel class="mb-4">
 								<v-expansion-panel-title class="text-h5 bg-green text-white"> Завдання 2. Конвертер температур </v-expansion-panel-title>
 								<v-expansion-panel-text>
-									<v-card class="mt-4" elevation="2">
-										<v-card-text class="pt-4">
-											<p class="text-h6 mb-4">Створіть програму з графічним інтерфейсом для конвертації температури між градусами Цельсія та Фаренгейта.</p>
+									<p class="text-h6 mb-4">Створіть програму з графічним інтерфейсом для конвертації температури між градусами Цельсія та Фаренгейта.</p>
 
-											<v-card class="my-4 pa-4" color="grey-lighten-4">
-												<div class="text-subtitle-1 mb-2">Необхідні компоненти:</div>
-												<v-list>
-													<v-list-item prepend-icon="mdi-check">
-														<v-list-item-title>Поле для введення температури</v-list-item-title>
-													</v-list-item>
-													<v-list-item prepend-icon="mdi-check">
-														<v-list-item-title>Перемикач для вибору напрямку конвертації</v-list-item-title>
-													</v-list-item>
-													<v-list-item prepend-icon="mdi-check">
-														<v-list-item-title>Кнопка для конвертації</v-list-item-title>
-													</v-list-item>
-													<v-list-item prepend-icon="mdi-check">
-														<v-list-item-title>Поле для виведення результату</v-list-item-title>
-													</v-list-item>
-												</v-list>
-											</v-card>
+									<div class="d-flex mb-4">
+										<v-btn color="primary" @click="converter.dialog = true">Перевірити розв'язок</v-btn>
+									</div>
 
-											<v-expand-transition>
-												<div>
-													<v-expansion-panels>
-														<v-expansion-panel>
-															<v-expansion-panel-title>
-																<v-icon color="success" class="mr-2">mdi-check-circle</v-icon>
-																Подивитися розв'язок
-															</v-expansion-panel-title>
-															<v-expansion-panel-text>
-																<v-sheet color="grey-lighten-4" class="pa-4 rounded">
-																	<pre><code>import tkinter as tk
+									<v-dialog v-model="converter.dialog" width="600px">
+										<v-card>
+											<v-card-title class="text-h5">Перевірка розв'язку</v-card-title>
+											<v-card-text>
+												<v-card class="mb-4 pa-4" color="grey-lighten-4">
+													<div class="text-subtitle-1 mb-2">Необхідні компоненти:</div>
+													<v-list>
+														<v-list-item prepend-icon="mdi-check">
+															<v-list-item-title>Поле для введення температури</v-list-item-title>
+														</v-list-item>
+														<v-list-item prepend-icon="mdi-check">
+															<v-list-item-title>Перемикач для вибору напрямку конвертації</v-list-item-title>
+														</v-list-item>
+														<v-list-item prepend-icon="mdi-check">
+															<v-list-item-title>Кнопка для конвертації</v-list-item-title>
+														</v-list-item>
+														<v-list-item prepend-icon="mdi-check">
+															<v-list-item-title>Поле для виведення результату</v-list-item-title>
+														</v-list-item>
+													</v-list>
+												</v-card>
+
+												<v-text-field v-model="converter.answer" label="Введіть посилання на ваш код" :error-messages="converter.error" @keyup.enter="checkConverterAnswer"></v-text-field>
+
+												<v-expand-transition>
+													<div v-if="converter.showSolution && converter.isCorrect">
+														<div class="d-flex align-center mb-2">
+															<v-icon color="success" class="mr-2">mdi-check-circle</v-icon>
+															<span class="text-subtitle-1">Правильно! Ось приклад розв'язку:</span>
+														</div>
+														<v-sheet color="grey-lighten-4" class="pa-4 rounded">
+															<pre><code>import tkinter as tk
 from tkinter import ttk
 
 def convert_temperature():
@@ -180,14 +198,17 @@ result_label = ttk.Label(window, text='Результат: ')
 result_label.pack(pady=5)
 
 window.mainloop()</code></pre>
-																</v-sheet>
-															</v-expansion-panel-text>
-														</v-expansion-panel>
-													</v-expansion-panels>
-												</div>
-											</v-expand-transition>
-										</v-card-text>
-									</v-card>
+														</v-sheet>
+													</div>
+												</v-expand-transition>
+											</v-card-text>
+											<v-card-actions>
+												<v-spacer></v-spacer>
+												<v-btn color="primary" @click="checkConverterAnswer">Перевірити</v-btn>
+												<v-btn color="grey" @click="converter.dialog = false">Закрити</v-btn>
+											</v-card-actions>
+										</v-card>
+									</v-dialog>
 								</v-expansion-panel-text>
 							</v-expansion-panel>
 						</v-expansion-panels>
@@ -197,6 +218,54 @@ window.mainloop()</code></pre>
 		</v-row>
 	</v-container>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+
+const calculator = ref({
+	answer: '',
+	error: '',
+	showSolution: false,
+	attempts: 0,
+	isCorrect: false,
+	dialog: false,
+});
+
+const converter = ref({
+	answer: '',
+	error: '',
+	showSolution: false,
+	attempts: 0,
+	isCorrect: false,
+	dialog: false,
+});
+
+function checkCalculatorAnswer() {
+	// В цьому випадку ми просто перевіряємо, що користувач надав посилання
+	if (calculator.value.answer.trim().length > 0) {
+		calculator.value.error = '';
+		calculator.value.showSolution = true;
+		calculator.value.isCorrect = true;
+		return;
+	}
+
+	calculator.value.attempts++;
+	calculator.value.error = 'Будь ласка, надайте посилання на ваш код';
+}
+
+function checkConverterAnswer() {
+	// В цьому випадку ми просто перевіряємо, що користувач надав посилання
+	if (converter.value.answer.trim().length > 0) {
+		converter.value.error = '';
+		converter.value.showSolution = true;
+		converter.value.isCorrect = true;
+		return;
+	}
+
+	converter.value.attempts++;
+	converter.value.error = 'Будь ласка, надайте посилання на ваш код';
+}
+</script>
 
 <style scoped>
 pre {

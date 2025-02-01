@@ -6,51 +6,49 @@
 					<v-card-title class="text-h4 font-weight-bold text-center py-4">Консольні проєкти</v-card-title>
 
 					<v-card-text class="text-body-1">
-						<!-- День народження -->
-						<v-card class="mb-4">
-							<v-card-title class="text-h5 bg-green text-white"> Завдання 1. Програма "День народження" </v-card-title>
-							<v-card-text>
-								<!-- Опис завдання -->
-								<p class="text-h6 mb-4">
-									Марічка для святкування свого дня народження хоче купити a кг цукерок за ціною x грн за 1 кг і b пляшок лимонаду за ціною y грн за 1 пляшку. Складіть проєкт для визначення
-									вартості цієї покупки.
-								</p>
+						<v-expansion-panels>
+							<!-- День народження -->
+							<v-expansion-panel class="mb-4">
+								<v-expansion-panel-title class="text-h5 bg-green text-white"> Завдання 1. Програма "День народження" </v-expansion-panel-title>
+								<v-expansion-panel-text>
+									<p class="text-h6 mb-4">
+										Марічка для святкування свого дня народження хоче купити a кг цукерок за ціною x грн за 1 кг і b пляшок лимонаду за ціною y грн за 1 пляшку. Складіть проєкт для
+										визначення вартості цієї покупки.
+									</p>
 
-								<!-- Вхідні дані -->
-								<v-card class="my-4 pa-4" color="grey-lighten-4">
-									<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
-									<div class="text-body-1">a = 2 кг цукерок</div>
-									<div class="text-body-1">x = 150 грн за 1 кг</div>
-									<div class="text-body-1">b = 3 пляшки лимонаду</div>
-									<div class="text-body-1">y = 25 грн за пляшку</div>
-								</v-card>
+									<div class="d-flex mb-4">
+										<v-btn color="primary" @click="birthday.dialog = true">Перевірити розв'язок</v-btn>
+									</div>
 
-								<!-- Поле введення -->
-								<v-card class="my-4 pa-4">
-									<v-text-field
-										v-model="birthday.answer"
-										label="Введіть вашу відповідь"
-										type="number"
-										suffix="грн"
-										:error-messages="birthday.error"
-										@keyup.enter="checkBirthdayAnswer"
-									></v-text-field>
-									<v-btn color="primary" @click="checkBirthdayAnswer"> Перевірити </v-btn>
-								</v-card>
-
-								<!-- Розв'язок -->
-								<v-expand-transition>
-									<div v-if="birthday.showSolution">
-										<v-card class="mt-4" color="grey-lighten-4">
-											<v-card-title>
-												<v-icon :color="birthday.isCorrect ? 'success' : 'primary'" class="mr-2">
-													{{ birthday.isCorrect ? 'mdi-check-circle' : 'mdi-code-tags' }}
-												</v-icon>
-												Розв'язок
-											</v-card-title>
+									<v-dialog v-model="birthday.dialog" width="600px">
+										<v-card>
+											<v-card-title class="text-h5">Перевірка розв'язку</v-card-title>
 											<v-card-text>
-												<v-sheet color="grey-lighten-4" class="pa-4 rounded">
-													<pre><code># Введення даних
+												<v-card class="mb-4 pa-4" color="grey-lighten-4">
+													<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
+													<div class="text-body-1">a = 2 кг цукерок</div>
+													<div class="text-body-1">x = 150 грн за 1 кг</div>
+													<div class="text-body-1">b = 3 пляшки лимонаду</div>
+													<div class="text-body-1">y = 25 грн за пляшку</div>
+												</v-card>
+
+												<v-text-field
+													v-model="birthday.answer"
+													label="Введіть вашу відповідь"
+													type="number"
+													suffix="грн"
+													:error-messages="birthday.error"
+													@keyup.enter="checkBirthdayAnswer"
+												></v-text-field>
+
+												<v-expand-transition>
+													<div v-if="birthday.showSolution && birthday.isCorrect">
+														<div class="d-flex align-center mb-2">
+															<v-icon color="success" class="mr-2">mdi-check-circle</v-icon>
+															<span class="text-subtitle-1">Правильно! Ось розв'язок:</span>
+														</div>
+														<v-sheet color="grey-lighten-4" class="pa-4 rounded">
+															<pre><code># Введення даних
 a = float(input('Введіть кількість кг цукерок: '))
 x = float(input('Введіть ціну за 1 кг цукерок: '))
 b = float(input('Введіть кількість пляшок лимонаду: '))
@@ -63,59 +61,66 @@ total_cost = candy_cost + lemonade_cost
 
 # Виведення результату
 print(f'Загальна вартість покупки: {total_cost} грн')</code></pre>
-												</v-sheet>
+														</v-sheet>
+													</div>
+												</v-expand-transition>
 											</v-card-text>
+											<v-card-actions>
+												<v-spacer></v-spacer>
+												<v-btn color="primary" @click="checkBirthdayAnswer">Перевірити</v-btn>
+												<v-btn color="grey" @click="birthday.dialog = false">Закрити</v-btn>
+											</v-card-actions>
 										</v-card>
+									</v-dialog>
+								</v-expansion-panel-text>
+							</v-expansion-panel>
+
+							<!-- Конвертер валют -->
+							<v-expansion-panel class="mb-4">
+								<v-expansion-panel-title class="text-h5 bg-green text-white"> Завдання 2. Конвертер валют </v-expansion-panel-title>
+								<v-expansion-panel-text>
+									<p class="text-h6 mb-4">Напишіть програму для конвертації гривень (UAH) в долари (USD) та євро (EUR).</p>
+
+									<div class="d-flex mb-4">
+										<v-btn color="primary" @click="converter.dialog = true">Перевірити розв'язок</v-btn>
 									</div>
-								</v-expand-transition>
-							</v-card-text>
-						</v-card>
 
-						<!-- Конвертер валют -->
-						<v-card class="mb-4">
-							<v-card-title class="text-h5 bg-green text-white"> Завдання 2. Конвертер валют </v-card-title>
-							<v-card-text>
-								<p class="text-h6 mb-4">Напишіть програму для конвертації гривень (UAH) в долари (USD) та євро (EUR).</p>
-
-								<v-card class="my-4 pa-4" color="grey-lighten-4">
-									<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
-									<div class="text-body-1">Сума: 1000 грн</div>
-									<div class="text-body-1">Курс USD: 37.5 грн</div>
-									<div class="text-body-1">Курс EUR: 40.5 грн</div>
-								</v-card>
-
-								<v-card class="my-4 pa-4">
-									<v-text-field
-										v-model="converter.usdAnswer"
-										label="Введіть суму в USD"
-										type="number"
-										suffix="USD"
-										:error-messages="converter.usdError"
-										@keyup.enter="checkConverterAnswers"
-									></v-text-field>
-									<v-text-field
-										v-model="converter.eurAnswer"
-										label="Введіть суму в EUR"
-										type="number"
-										suffix="EUR"
-										:error-messages="converter.eurError"
-										@keyup.enter="checkConverterAnswers"
-									></v-text-field>
-									<v-btn color="primary" @click="checkConverterAnswers"> Перевірити </v-btn>
-								</v-card>
-
-								<v-expand-transition>
-									<div v-if="converter.showSolution">
-										<v-card class="mt-4" color="grey-lighten-4">
-											<v-card-title>
-												<v-icon :color="converter.isCorrect ? 'success' : 'primary'" class="mr-2">
-													{{ converter.isCorrect ? 'mdi-check-circle' : 'mdi-code-tags' }}
-												</v-icon>
-												Розв'язок
-											</v-card-title>
+									<v-dialog v-model="converter.dialog" width="600px">
+										<v-card>
+											<v-card-title class="text-h5">Перевірка розв'язку</v-card-title>
 											<v-card-text>
-												<v-sheet color="grey-lighten-4" class="pa-4 rounded">
-													<pre><code>usd_rate = 37.5
+												<v-card class="mb-4 pa-4" color="grey-lighten-4">
+													<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
+													<div class="text-body-1">Сума: 1000 грн</div>
+													<div class="text-body-1">Курс USD: 37.5 грн</div>
+													<div class="text-body-1">Курс EUR: 40.5 грн</div>
+												</v-card>
+
+												<v-text-field
+													v-model="converter.usdAnswer"
+													label="Введіть суму в USD"
+													type="number"
+													suffix="USD"
+													:error-messages="converter.usdError"
+													@keyup.enter="checkConverterAnswers"
+												></v-text-field>
+												<v-text-field
+													v-model="converter.eurAnswer"
+													label="Введіть суму в EUR"
+													type="number"
+													suffix="EUR"
+													:error-messages="converter.eurError"
+													@keyup.enter="checkConverterAnswers"
+												></v-text-field>
+
+												<v-expand-transition>
+													<div v-if="converter.showSolution && converter.isCorrect">
+														<div class="d-flex align-center mb-2">
+															<v-icon color="success" class="mr-2">mdi-check-circle</v-icon>
+															<span class="text-subtitle-1">Правильно! Ось розв'язок:</span>
+														</div>
+														<v-sheet color="grey-lighten-4" class="pa-4 rounded">
+															<pre><code>usd_rate = 37.5
 eur_rate = 40.5
 uah = float(input('Введіть суму в гривнях: '))
 
@@ -124,48 +129,55 @@ eur = round(uah / eur_rate, 2)
 
 print(f'{uah} грн = {usd} USD')
 print(f'{uah} грн = {eur} EUR')</code></pre>
-												</v-sheet>
+														</v-sheet>
+													</div>
+												</v-expand-transition>
 											</v-card-text>
+											<v-card-actions>
+												<v-spacer></v-spacer>
+												<v-btn color="primary" @click="checkConverterAnswers">Перевірити</v-btn>
+												<v-btn color="grey" @click="converter.dialog = false">Закрити</v-btn>
+											</v-card-actions>
 										</v-card>
+									</v-dialog>
+								</v-expansion-panel-text>
+							</v-expansion-panel>
+
+							<!-- Клумба -->
+							<v-expansion-panel class="mb-4">
+								<v-expansion-panel-title class="text-h5 bg-green text-white"> Завдання 3. Клумба </v-expansion-panel-title>
+								<v-expansion-panel-text>
+									<p class="text-h6 mb-4">
+										На прямокутній клумбі зі сторонами a=5 м і b=3 м потрібно встановити огорожу та висадити квіти. Обчисліть довжину огорожі та кількість саджанців, якщо на 1 кв. м
+										висаджують 4 саджанці.
+									</p>
+
+									<div class="d-flex mb-4">
+										<v-btn color="primary" @click="flowerbed.dialog = true">Перевірити розв'язок</v-btn>
 									</div>
-								</v-expand-transition>
-							</v-card-text>
-						</v-card>
 
-						<!-- Клумба -->
-						<v-card class="mb-4">
-							<v-card-title class="text-h5 bg-green text-white"> Завдання 3. Клумба </v-card-title>
-							<v-card-text>
-								<p class="text-h6 mb-4">
-									На прямокутній клумбі зі сторонами a=5 м і b=3 м потрібно встановити огорожу та висадити квіти. Обчисліть довжину огорожі та кількість саджанців, якщо на 1 кв. м висаджують
-									4 саджанці.
-								</p>
-
-								<v-card class="my-4 pa-4" color="grey-lighten-4">
-									<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
-									<div class="text-body-1">a = 5 м (довжина)</div>
-									<div class="text-body-1">b = 3 м (ширина)</div>
-									<div class="text-body-1">4 саджанці на 1 кв. м</div>
-								</v-card>
-
-								<v-card class="my-4 pa-4">
-									<v-text-field v-model="flowerbed.fenceAnswer" label="Введіть довжину огорожі" type="number" suffix="м" :error-messages="flowerbed.fenceError"></v-text-field>
-									<v-text-field v-model="flowerbed.plantsAnswer" label="Введіть кількість саджанців" type="number" :error-messages="flowerbed.plantsError"></v-text-field>
-									<v-btn color="primary" @click="checkFlowerbedAnswers"> Перевірити </v-btn>
-								</v-card>
-
-								<v-expand-transition>
-									<div v-if="flowerbed.showSolution">
-										<v-card class="mt-4" color="grey-lighten-4">
-											<v-card-title>
-												<v-icon :color="flowerbed.isCorrect ? 'success' : 'primary'" class="mr-2">
-													{{ flowerbed.isCorrect ? 'mdi-check-circle' : 'mdi-code-tags' }}
-												</v-icon>
-												Розв'язок
-											</v-card-title>
+									<v-dialog v-model="flowerbed.dialog" width="600px">
+										<v-card>
+											<v-card-title class="text-h5">Перевірка розв'язку</v-card-title>
 											<v-card-text>
-												<v-sheet color="grey-lighten-4" class="pa-4 rounded">
-													<pre><code># Введення розмірів клумби
+												<v-card class="mb-4 pa-4" color="grey-lighten-4">
+													<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
+													<div class="text-body-1">a = 5 м (довжина)</div>
+													<div class="text-body-1">b = 3 м (ширина)</div>
+													<div class="text-body-1">4 саджанці на 1 кв. м</div>
+												</v-card>
+
+												<v-text-field v-model="flowerbed.fenceAnswer" label="Введіть довжину огорожі" type="number" suffix="м" :error-messages="flowerbed.fenceError"></v-text-field>
+												<v-text-field v-model="flowerbed.plantsAnswer" label="Введіть кількість саджанців" type="number" :error-messages="flowerbed.plantsError"></v-text-field>
+
+												<v-expand-transition>
+													<div v-if="flowerbed.showSolution && flowerbed.isCorrect">
+														<div class="d-flex align-center mb-2">
+															<v-icon color="success" class="mr-2">mdi-check-circle</v-icon>
+															<span class="text-subtitle-1">Правильно! Ось розв'язок:</span>
+														</div>
+														<v-sheet color="grey-lighten-4" class="pa-4 rounded">
+															<pre><code># Введення розмірів клумби
 a = float(input('Введіть довжину клумби (м): '))
 b = float(input('Введіть ширину клумби (м): '))
 plants_per_meter = 4
@@ -179,52 +191,64 @@ plants_needed = area * plants_per_meter
 
 print(f'Довжина огорожі: {fence_length} м')
 print(f'Потрібно саджанців: {plants_needed}')</code></pre>
-												</v-sheet>
+														</v-sheet>
+													</div>
+												</v-expand-transition>
 											</v-card-text>
+											<v-card-actions>
+												<v-spacer></v-spacer>
+												<v-btn color="primary" @click="checkFlowerbedAnswers">Перевірити</v-btn>
+												<v-btn color="grey" @click="flowerbed.dialog = false">Закрити</v-btn>
+											</v-card-actions>
 										</v-card>
+									</v-dialog>
+								</v-expansion-panel-text>
+							</v-expansion-panel>
+
+							<!-- Білочки -->
+							<v-expansion-panel class="mb-4">
+								<v-expansion-panel-title class="text-h5 bg-green text-white"> Завдання 4. Білочки </v-expansion-panel-title>
+								<v-expansion-panel-text>
+									<p class="text-h6 mb-4">
+										У кошику є 23 горіхи. Потрібно роздати їх 5 білочкам порівну (однакова кількість горіхів кожній білочці). Визначте, скільки горіхів отримає кожна білочка і скільки
+										горіхів залишиться в кошику.
+									</p>
+
+									<div class="d-flex mb-4">
+										<v-btn color="primary" @click="squirrels.dialog = true">Перевірити розв'язок</v-btn>
 									</div>
-								</v-expand-transition>
-							</v-card-text>
-						</v-card>
 
-						<!-- Білочки -->
-						<v-card class="mb-4">
-							<v-card-title class="text-h5 bg-green text-white"> Завдання 4. Білочки </v-card-title>
-							<v-card-text>
-								<p class="text-h6 mb-4">
-									У кошику є 23 горіхи. Потрібно роздати їх 5 білочкам порівну (однакова кількість горіхів кожній білочці). Визначте, скільки горіхів отримає кожна білочка і скільки горіхів
-									залишиться в кошику.
-								</p>
-
-								<v-card class="my-4 pa-4" color="grey-lighten-4">
-									<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
-									<div class="text-body-1">Кількість горіхів: 23</div>
-									<div class="text-body-1">Кількість білочок: 5</div>
-								</v-card>
-
-								<v-card class="my-4 pa-4">
-									<v-text-field
-										v-model="squirrels.nutsPerSquirrelAnswer"
-										label="Скільки горіхів отримає кожна білочка"
-										type="number"
-										:error-messages="squirrels.nutsPerSquirrelError"
-									></v-text-field>
-									<v-text-field v-model="squirrels.remainingNutsAnswer" label="Скільки горіхів залишиться" type="number" :error-messages="squirrels.remainingNutsError"></v-text-field>
-									<v-btn color="primary" @click="checkSquirrelsAnswers"> Перевірити </v-btn>
-								</v-card>
-
-								<v-expand-transition>
-									<div v-if="squirrels.showSolution">
-										<v-card class="mt-4" color="grey-lighten-4">
-											<v-card-title>
-												<v-icon :color="squirrels.isCorrect ? 'success' : 'primary'" class="mr-2">
-													{{ squirrels.isCorrect ? 'mdi-check-circle' : 'mdi-code-tags' }}
-												</v-icon>
-												Розв'язок
-											</v-card-title>
+									<v-dialog v-model="squirrels.dialog" width="600px">
+										<v-card>
+											<v-card-title class="text-h5">Перевірка розв'язку</v-card-title>
 											<v-card-text>
-												<v-sheet color="grey-lighten-4" class="pa-4 rounded">
-													<pre><code># Введення даних
+												<v-card class="mb-4 pa-4" color="grey-lighten-4">
+													<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
+													<div class="text-body-1">Кількість горіхів: 23</div>
+													<div class="text-body-1">Кількість білочок: 5</div>
+												</v-card>
+
+												<v-text-field
+													v-model="squirrels.nutsPerSquirrelAnswer"
+													label="Скільки горіхів отримає кожна білочка"
+													type="number"
+													:error-messages="squirrels.nutsPerSquirrelError"
+												></v-text-field>
+												<v-text-field
+													v-model="squirrels.remainingNutsAnswer"
+													label="Скільки горіхів залишиться"
+													type="number"
+													:error-messages="squirrels.remainingNutsError"
+												></v-text-field>
+
+												<v-expand-transition>
+													<div v-if="squirrels.showSolution && squirrels.isCorrect">
+														<div class="d-flex align-center mb-2">
+															<v-icon color="success" class="mr-2">mdi-check-circle</v-icon>
+															<span class="text-subtitle-1">Правильно! Ось розв'язок:</span>
+														</div>
+														<v-sheet color="grey-lighten-4" class="pa-4 rounded">
+															<pre><code># Введення даних
 total_nuts = int(input('Введіть кількість горіхів: '))
 squirrels = int(input('Введіть кількість білочок: '))
 
@@ -234,54 +258,61 @@ remaining_nuts = total_nuts % squirrels       # Остача від діленн
 
 print(f'Кожна білочка отримає {nuts_per_squirrel} горіхів')
 print(f'Залишиться {remaining_nuts} горіхів')</code></pre>
-												</v-sheet>
+														</v-sheet>
+													</div>
+												</v-expand-transition>
 											</v-card-text>
+											<v-card-actions>
+												<v-spacer></v-spacer>
+												<v-btn color="primary" @click="checkSquirrelsAnswers">Перевірити</v-btn>
+												<v-btn color="grey" @click="squirrels.dialog = false">Закрити</v-btn>
+											</v-card-actions>
 										</v-card>
+									</v-dialog>
+								</v-expansion-panel-text>
+							</v-expansion-panel>
+
+							<!-- Терези -->
+							<v-expansion-panel class="mb-4">
+								<v-expansion-panel-title class="text-h5 bg-green text-white"> Завдання 5. Терези </v-expansion-panel-title>
+								<v-expansion-panel-text>
+									<p class="text-h6 mb-4">
+										На одній чаші терезів стоїть Даринка (30 кг), а на іншій - коробка цукерок (75 кг). Поруч стоїть Оленка, яка на 5 кг важча за Даринку. Скільки кілограмів цукерок потрібно
+										з'їсти дівчаткам, щоб терези зрівноважились?
+									</p>
+
+									<div class="d-flex mb-4">
+										<v-btn color="primary" @click="scales.dialog = true">Перевірити розв'язок</v-btn>
 									</div>
-								</v-expand-transition>
-							</v-card-text>
-						</v-card>
 
-						<!-- Терези -->
-						<v-card class="mb-4">
-							<v-card-title class="text-h5 bg-green text-white"> Завдання 5. Терези </v-card-title>
-							<v-card-text>
-								<p class="text-h6 mb-4">
-									На одній чаші терезів стоїть Даринка (30 кг), а на іншій - коробка цукерок (75 кг). Поруч стоїть Оленка, яка на 5 кг важча за Даринку. Скільки кілограмів цукерок потрібно
-									з'їсти дівчаткам, щоб терези зрівноважились?
-								</p>
-
-								<v-card class="my-4 pa-4" color="grey-lighten-4">
-									<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
-									<div class="text-body-1">Вага Даринки: 30 кг</div>
-									<div class="text-body-1">Вага цукерок: 75 кг</div>
-									<div class="text-body-1">Оленка важча на: 5 кг</div>
-								</v-card>
-
-								<v-card class="my-4 pa-4">
-									<v-text-field
-										v-model="scales.answer"
-										label="Скільки кг цукерок треба з'їсти"
-										type="number"
-										suffix="кг"
-										:error-messages="scales.error"
-										@keyup.enter="checkScalesAnswer"
-									></v-text-field>
-									<v-btn color="primary" @click="checkScalesAnswer"> Перевірити </v-btn>
-								</v-card>
-
-								<v-expand-transition>
-									<div v-if="scales.showSolution">
-										<v-card class="mt-4" color="grey-lighten-4">
-											<v-card-title>
-												<v-icon :color="scales.isCorrect ? 'success' : 'primary'" class="mr-2">
-													{{ scales.isCorrect ? 'mdi-check-circle' : 'mdi-code-tags' }}
-												</v-icon>
-												Розв'язок
-											</v-card-title>
+									<v-dialog v-model="scales.dialog" width="600px">
+										<v-card>
+											<v-card-title class="text-h5">Перевірка розв'язку</v-card-title>
 											<v-card-text>
-												<v-sheet color="grey-lighten-4" class="pa-4 rounded">
-													<pre><code># Введення даних
+												<v-card class="mb-4 pa-4" color="grey-lighten-4">
+													<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
+													<div class="text-body-1">Вага Даринки: 30 кг</div>
+													<div class="text-body-1">Вага цукерок: 75 кг</div>
+													<div class="text-body-1">Оленка важча на: 5 кг</div>
+												</v-card>
+
+												<v-text-field
+													v-model="scales.answer"
+													label="Скільки кг цукерок треба з'їсти"
+													type="number"
+													suffix="кг"
+													:error-messages="scales.error"
+													@keyup.enter="checkScalesAnswer"
+												></v-text-field>
+
+												<v-expand-transition>
+													<div v-if="scales.showSolution && scales.isCorrect">
+														<div class="d-flex align-center mb-2">
+															<v-icon color="success" class="mr-2">mdi-check-circle</v-icon>
+															<span class="text-subtitle-1">Правильно! Ось розв'язок:</span>
+														</div>
+														<v-sheet color="grey-lighten-4" class="pa-4 rounded">
+															<pre><code># Введення даних
 darynka = float(input("Введіть вагу Даринки (кг): "))
 candies = float(input("Введіть вагу цукерок (кг): "))
 diff = float(input("На скільки кг важча Оленка: "))
@@ -294,43 +325,50 @@ olenka = darynka + diff
 candies_to_eat = candies - (darynka + olenka)
 
 print(f'Дівчаткам потрібно з\'їсти {candies_to_eat} кг цукерок')</code></pre>
-												</v-sheet>
+														</v-sheet>
+													</div>
+												</v-expand-transition>
 											</v-card-text>
+											<v-card-actions>
+												<v-spacer></v-spacer>
+												<v-btn color="primary" @click="checkScalesAnswer">Перевірити</v-btn>
+												<v-btn color="grey" @click="scales.dialog = false">Закрити</v-btn>
+											</v-card-actions>
 										</v-card>
+									</v-dialog>
+								</v-expansion-panel-text>
+							</v-expansion-panel>
+
+							<!-- Куб -->
+							<v-expansion-panel class="mb-4">
+								<v-expansion-panel-title class="text-h5 bg-green text-white"> Завдання 6. Куб </v-expansion-panel-title>
+								<v-expansion-panel-text>
+									<p class="text-h6 mb-4">Обчисліть об'єм куба та площу його поверхні, якщо довжина ребра куба дорівнює 5 одиниць.</p>
+
+									<div class="d-flex mb-4">
+										<v-btn color="primary" @click="cube.dialog = true">Перевірити розв'язок</v-btn>
 									</div>
-								</v-expand-transition>
-							</v-card-text>
-						</v-card>
 
-						<!-- Куб -->
-						<v-card class="mb-4">
-							<v-card-title class="text-h5 bg-green text-white"> Завдання 6. Куб </v-card-title>
-							<v-card-text>
-								<p class="text-h6 mb-4">Обчисліть об'єм куба та площу його поверхні, якщо довжина ребра куба дорівнює 5 одиниць.</p>
-
-								<v-card class="my-4 pa-4" color="grey-lighten-4">
-									<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
-									<div class="text-body-1">Довжина ребра: 5 од.</div>
-								</v-card>
-
-								<v-card class="my-4 pa-4">
-									<v-text-field v-model="cube.volumeAnswer" label="Введіть об'єм куба" type="number" suffix="куб. од." :error-messages="cube.volumeError"></v-text-field>
-									<v-text-field v-model="cube.areaAnswer" label="Введіть площу поверхні куба" type="number" suffix="кв. од." :error-messages="cube.areaError"></v-text-field>
-									<v-btn color="primary" @click="checkCubeAnswers"> Перевірити </v-btn>
-								</v-card>
-
-								<v-expand-transition>
-									<div v-if="cube.showSolution">
-										<v-card class="mt-4" color="grey-lighten-4">
-											<v-card-title>
-												<v-icon :color="cube.isCorrect ? 'success' : 'primary'" class="mr-2">
-													{{ cube.isCorrect ? 'mdi-check-circle' : 'mdi-code-tags' }}
-												</v-icon>
-												Розв'язок
-											</v-card-title>
+									<v-dialog v-model="cube.dialog" width="600px">
+										<v-card>
+											<v-card-title class="text-h5">Перевірка розв'язку</v-card-title>
 											<v-card-text>
-												<v-sheet color="grey-lighten-4" class="pa-4 rounded">
-													<pre><code># Введення довжини ребра
+												<v-card class="mb-4 pa-4" color="grey-lighten-4">
+													<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
+													<div class="text-body-1">Довжина ребра: 5 од.</div>
+												</v-card>
+
+												<v-text-field v-model="cube.volumeAnswer" label="Введіть об'єм куба" type="number" suffix="куб. од." :error-messages="cube.volumeError"></v-text-field>
+												<v-text-field v-model="cube.areaAnswer" label="Введіть площу поверхні куба" type="number" suffix="кв. од." :error-messages="cube.areaError"></v-text-field>
+
+												<v-expand-transition>
+													<div v-if="cube.showSolution && cube.isCorrect">
+														<div class="d-flex align-center mb-2">
+															<v-icon color="success" class="mr-2">mdi-check-circle</v-icon>
+															<span class="text-subtitle-1">Правильно! Ось розв'язок:</span>
+														</div>
+														<v-sheet color="grey-lighten-4" class="pa-4 rounded">
+															<pre><code># Введення довжини ребра
 edge = float(input('Введіть довжину ребра куба: '))
 
 # Обчислення об'єму (куб довжини ребра)
@@ -341,51 +379,58 @@ surface_area = 6 * edge ** 2
 
 print(f'Об\'єм куба: {volume} куб. од.')
 print(f'Площа поверхні куба: {surface_area} кв. од.')</code></pre>
-												</v-sheet>
+														</v-sheet>
+													</div>
+												</v-expand-transition>
 											</v-card-text>
+											<v-card-actions>
+												<v-spacer></v-spacer>
+												<v-btn color="primary" @click="checkCubeAnswers">Перевірити</v-btn>
+												<v-btn color="grey" @click="cube.dialog = false">Закрити</v-btn>
+											</v-card-actions>
 										</v-card>
+									</v-dialog>
+								</v-expansion-panel-text>
+							</v-expansion-panel>
+
+							<!-- Піцерія -->
+							<v-expansion-panel class="mb-4">
+								<v-expansion-panel-title class="text-h5 bg-green text-white"> Завдання 7. Піцерія </v-expansion-panel-title>
+								<v-expansion-panel-text>
+									<p class="text-h6 mb-4">У піцерії кожна піца коштує 200 грн. При замовленні 3 піц надається знижка 10%. Обчисліть, скільки потрібно заплатити за замовлення.</p>
+
+									<div class="d-flex mb-4">
+										<v-btn color="primary" @click="pizzeria.dialog = true">Перевірити розв'язок</v-btn>
 									</div>
-								</v-expand-transition>
-							</v-card-text>
-						</v-card>
 
-						<!-- Піцерія -->
-						<v-card class="mb-4">
-							<v-card-title class="text-h5 bg-green text-white"> Завдання 7. Піцерія </v-card-title>
-							<v-card-text>
-								<p class="text-h6 mb-4">У піцерії кожна піца коштує 200 грн. При замовленні 3 піц надається знижка 10%. Обчисліть, скільки потрібно заплатити за замовлення.</p>
-
-								<v-card class="my-4 pa-4" color="grey-lighten-4">
-									<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
-									<div class="text-body-1">Ціна однієї піци: 200 грн</div>
-									<div class="text-body-1">Кількість піц: 3</div>
-									<div class="text-body-1">Знижка: 10%</div>
-								</v-card>
-
-								<v-card class="my-4 pa-4">
-									<v-text-field
-										v-model="pizzeria.answer"
-										label="Введіть суму до сплати"
-										type="number"
-										suffix="грн"
-										:error-messages="pizzeria.error"
-										@keyup.enter="checkPizzeriaAnswer"
-									></v-text-field>
-									<v-btn color="primary" @click="checkPizzeriaAnswer"> Перевірити </v-btn>
-								</v-card>
-
-								<v-expand-transition>
-									<div v-if="pizzeria.showSolution">
-										<v-card class="mt-4" color="grey-lighten-4">
-											<v-card-title>
-												<v-icon :color="pizzeria.isCorrect ? 'success' : 'primary'" class="mr-2">
-													{{ pizzeria.isCorrect ? 'mdi-check-circle' : 'mdi-code-tags' }}
-												</v-icon>
-												Розв'язок
-											</v-card-title>
+									<v-dialog v-model="pizzeria.dialog" width="600px">
+										<v-card>
+											<v-card-title class="text-h5">Перевірка розв'язку</v-card-title>
 											<v-card-text>
-												<v-sheet color="grey-lighten-4" class="pa-4 rounded">
-													<pre><code># Введення даних
+												<v-card class="mb-4 pa-4" color="grey-lighten-4">
+													<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
+													<div class="text-body-1">Ціна однієї піци: 200 грн</div>
+													<div class="text-body-1">Кількість піц: 3</div>
+													<div class="text-body-1">Знижка: 10%</div>
+												</v-card>
+
+												<v-text-field
+													v-model="pizzeria.answer"
+													label="Введіть суму до сплати"
+													type="number"
+													suffix="грн"
+													:error-messages="pizzeria.error"
+													@keyup.enter="checkPizzeriaAnswer"
+												></v-text-field>
+
+												<v-expand-transition>
+													<div v-if="pizzeria.showSolution && pizzeria.isCorrect">
+														<div class="d-flex align-center mb-2">
+															<v-icon color="success" class="mr-2">mdi-check-circle</v-icon>
+															<span class="text-subtitle-1">Правильно! Ось розв'язок:</span>
+														</div>
+														<v-sheet color="grey-lighten-4" class="pa-4 rounded">
+															<pre><code># Введення даних
 price = float(input('Введіть ціну однієї піци: '))
 count = int(input('Введіть кількість піц: '))
 
@@ -396,53 +441,60 @@ total = price * count
 final_price = total * 0.9  # або total - (total * 0.1)
 
 print(f'До сплати: {final_price} грн')</code></pre>
-												</v-sheet>
+														</v-sheet>
+													</div>
+												</v-expand-transition>
 											</v-card-text>
+											<v-card-actions>
+												<v-spacer></v-spacer>
+												<v-btn color="primary" @click="checkPizzeriaAnswer">Перевірити</v-btn>
+												<v-btn color="grey" @click="pizzeria.dialog = false">Закрити</v-btn>
+											</v-card-actions>
 										</v-card>
+									</v-dialog>
+								</v-expansion-panel-text>
+							</v-expansion-panel>
+
+							<!-- Кафе -->
+							<v-expansion-panel class="mb-4">
+								<v-expansion-panel-title class="text-h5 bg-green text-white"> Завдання 8. Кафе </v-expansion-panel-title>
+								<v-expansion-panel-text>
+									<p class="text-h6 mb-4">
+										Компанія з 14 друзів вирішила разом пообідати в кафе. Загальний рахунок становить 181 грн. Обчисліть, скільки повинен заплатити кожен друг, якщо вони вирішили розділити
+										рахунок порівну.
+									</p>
+
+									<div class="d-flex mb-4">
+										<v-btn color="primary" @click="cafe.dialog = true">Перевірити розв'язок</v-btn>
 									</div>
-								</v-expand-transition>
-							</v-card-text>
-						</v-card>
 
-						<!-- Кафе -->
-						<v-card class="mb-4">
-							<v-card-title class="text-h5 bg-green text-white"> Завдання 8. Кафе </v-card-title>
-							<v-card-text>
-								<p class="text-h6 mb-4">
-									Компанія з 14 друзів вирішила разом пообідати в кафе. Загальний рахунок становить 181 грн. Обчисліть, скільки повинен заплатити кожен друг, якщо вони вирішили розділити
-									рахунок порівну.
-								</p>
-
-								<v-card class="my-4 pa-4" color="grey-lighten-4">
-									<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
-									<div class="text-body-1">Загальний рахунок: 181 грн</div>
-									<div class="text-body-1">Кількість друзів: 14</div>
-								</v-card>
-
-								<v-card class="my-4 pa-4">
-									<v-text-field
-										v-model="cafe.answer"
-										label="Введіть суму на одного друга"
-										type="number"
-										suffix="грн"
-										:error-messages="cafe.error"
-										@keyup.enter="checkCafeAnswer"
-									></v-text-field>
-									<v-btn color="primary" @click="checkCafeAnswer"> Перевірити </v-btn>
-								</v-card>
-
-								<v-expand-transition>
-									<div v-if="cafe.showSolution">
-										<v-card class="mt-4" color="grey-lighten-4">
-											<v-card-title>
-												<v-icon :color="cafe.isCorrect ? 'success' : 'primary'" class="mr-2">
-													{{ cafe.isCorrect ? 'mdi-check-circle' : 'mdi-code-tags' }}
-												</v-icon>
-												Розв'язок
-											</v-card-title>
+									<v-dialog v-model="cafe.dialog" width="600px">
+										<v-card>
+											<v-card-title class="text-h5">Перевірка розв'язку</v-card-title>
 											<v-card-text>
-												<v-sheet color="grey-lighten-4" class="pa-4 rounded">
-													<pre><code># Введення суми рахунку та кількості друзів
+												<v-card class="mb-4 pa-4" color="grey-lighten-4">
+													<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
+													<div class="text-body-1">Загальний рахунок: 181 грн</div>
+													<div class="text-body-1">Кількість друзів: 14</div>
+												</v-card>
+
+												<v-text-field
+													v-model="cafe.answer"
+													label="Введіть суму на одного друга"
+													type="number"
+													suffix="грн"
+													:error-messages="cafe.error"
+													@keyup.enter="checkCafeAnswer"
+												></v-text-field>
+
+												<v-expand-transition>
+													<div v-if="cafe.showSolution && cafe.isCorrect">
+														<div class="d-flex align-center mb-2">
+															<v-icon color="success" class="mr-2">mdi-check-circle</v-icon>
+															<span class="text-subtitle-1">Правильно! Ось розв'язок:</span>
+														</div>
+														<v-sheet color="grey-lighten-4" class="pa-4 rounded">
+															<pre><code># Введення суми рахунку та кількості друзів
 total = float(input('Введіть загальну суму рахунку: '))
 friends = int(input('Введіть кількість друзів: '))
 
@@ -450,13 +502,132 @@ friends = int(input('Введіть кількість друзів: '))
 per_person = round(total / friends, 2)
 
 print(f'Кожен повинен заплатити: {per_person} грн')</code></pre>
-												</v-sheet>
+														</v-sheet>
+													</div>
+												</v-expand-transition>
 											</v-card-text>
+											<v-card-actions>
+												<v-spacer></v-spacer>
+												<v-btn color="primary" @click="checkCafeAnswer">Перевірити</v-btn>
+												<v-btn color="grey" @click="cafe.dialog = false">Закрити</v-btn>
+											</v-card-actions>
 										</v-card>
+									</v-dialog>
+								</v-expansion-panel-text>
+							</v-expansion-panel>
+
+							<!-- Середній бал -->
+							<v-expansion-panel class="mb-4">
+								<v-expansion-panel-title class="text-h5 bg-green text-white"> Завдання 9. Середній бал </v-expansion-panel-title>
+								<v-expansion-panel-text>
+									<p class="text-h6 mb-4">
+										Учень отримав такі оцінки за чверть: математика - 10, фізика - 11, хімія - 9, історія - 12, література - 10. Обчисліть середній бал учня за чверть.
+									</p>
+
+									<div class="d-flex mb-4">
+										<v-btn color="primary" @click="grades.dialog = true">Перевірити розв'язок</v-btn>
 									</div>
-								</v-expand-transition>
-							</v-card-text>
-						</v-card>
+
+									<v-dialog v-model="grades.dialog" width="600px">
+										<v-card>
+											<v-card-title class="text-h5">Перевірка розв'язку</v-card-title>
+											<v-card-text>
+												<v-card class="mb-4 pa-4" color="grey-lighten-4">
+													<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
+													<div class="text-body-1">Математика: 10</div>
+													<div class="text-body-1">Фізика: 11</div>
+													<div class="text-body-1">Хімія: 9</div>
+													<div class="text-body-1">Історія: 12</div>
+													<div class="text-body-1">Література: 10</div>
+												</v-card>
+
+												<v-text-field v-model="grades.answer" label="Введіть середній бал" type="number" :error-messages="grades.error" @keyup.enter="checkGradesAnswer"></v-text-field>
+
+												<v-expand-transition>
+													<div v-if="grades.showSolution && grades.isCorrect">
+														<div class="d-flex align-center mb-2">
+															<v-icon color="success" class="mr-2">mdi-check-circle</v-icon>
+															<span class="text-subtitle-1">Правильно! Ось розв'язок:</span>
+														</div>
+														<v-sheet color="grey-lighten-4" class="pa-4 rounded">
+															<pre><code># Введення оцінок
+math = int(input('Введіть оцінку з математики: '))
+physics = int(input('Введіть оцінку з фізики: '))
+chemistry = int(input('Введіть оцінку з хімії: '))
+history = int(input('Введіть оцінку з історії: '))
+literature = int(input('Введіть оцінку з літератури: '))
+
+# Обчислення середнього балу
+total = math + physics + chemistry + history + literature
+subjects = 5
+average = total / subjects
+
+print(f'Середній бал: {average}')</code></pre>
+														</v-sheet>
+													</div>
+												</v-expand-transition>
+											</v-card-text>
+											<v-card-actions>
+												<v-spacer></v-spacer>
+												<v-btn color="primary" @click="checkGradesAnswer">Перевірити</v-btn>
+												<v-btn color="grey" @click="grades.dialog = false">Закрити</v-btn>
+											</v-card-actions>
+										</v-card>
+									</v-dialog>
+								</v-expansion-panel-text>
+							</v-expansion-panel>
+
+							<!-- Конвертер часу -->
+							<v-expansion-panel class="mb-4">
+								<v-expansion-panel-title class="text-h5 bg-green text-white"> Завдання 10. Конвертер часу </v-expansion-panel-title>
+								<v-expansion-panel-text>
+									<p class="text-h6 mb-4">Напишіть програму для конвертації 150 хвилин у години та хвилини.</p>
+
+									<div class="d-flex mb-4">
+										<v-btn color="primary" @click="time.dialog = true">Перевірити розв'язок</v-btn>
+									</div>
+
+									<v-dialog v-model="time.dialog" width="600px">
+										<v-card>
+											<v-card-title class="text-h5">Перевірка розв'язку</v-card-title>
+											<v-card-text>
+												<v-card class="mb-4 pa-4" color="grey-lighten-4">
+													<div class="text-subtitle-1 mb-2">Вхідні дані:</div>
+													<div class="text-body-1">Кількість хвилин: 150</div>
+												</v-card>
+
+												<v-text-field v-model="time.hoursAnswer" label="Введіть кількість годин" type="number" :error-messages="time.hoursError"></v-text-field>
+												<v-text-field v-model="time.minutesAnswer" label="Введіть кількість хвилин" type="number" :error-messages="time.minutesError"></v-text-field>
+
+												<v-expand-transition>
+													<div v-if="time.showSolution && time.isCorrect">
+														<div class="d-flex align-center mb-2">
+															<v-icon color="success" class="mr-2">mdi-check-circle</v-icon>
+															<span class="text-subtitle-1">Правильно! Ось розв'язок:</span>
+														</div>
+														<v-sheet color="grey-lighten-4" class="pa-4 rounded">
+															<pre><code># Введення загальної кількості хвилин
+total_minutes = int(input('Введіть кількість хвилин: '))
+
+# Обчислення годин та хвилин
+hours = total_minutes // 60
+minutes = total_minutes % 60
+
+print(f'{total_minutes} хвилин = {hours} год {minutes} хв')</code></pre>
+														</v-sheet>
+													</div>
+												</v-expand-transition>
+											</v-card-text>
+											<v-card-actions>
+												<v-spacer></v-spacer>
+												<v-btn color="primary" @click="checkTimeAnswers">Перевірити</v-btn>
+												<v-btn color="grey" @click="time.dialog = false">Закрити</v-btn>
+											</v-card-actions>
+										</v-card>
+									</v-dialog>
+								</v-expansion-panel-text>
+							</v-expansion-panel>
+						</v-expansion-panels>
 					</v-card-text>
 				</v-card>
 			</v-col>
@@ -473,6 +644,7 @@ const birthday = ref({
 	showSolution: false,
 	attempts: 0,
 	isCorrect: false,
+	dialog: false,
 });
 
 const converter = ref({
@@ -483,6 +655,7 @@ const converter = ref({
 	showSolution: false,
 	attempts: 0,
 	isCorrect: false,
+	dialog: false,
 });
 
 const flowerbed = ref({
@@ -493,6 +666,7 @@ const flowerbed = ref({
 	showSolution: false,
 	attempts: 0,
 	isCorrect: false,
+	dialog: false,
 });
 
 const squirrels = ref({
@@ -503,6 +677,7 @@ const squirrels = ref({
 	showSolution: false,
 	attempts: 0,
 	isCorrect: false,
+	dialog: false,
 });
 
 const scales = ref({
@@ -511,6 +686,7 @@ const scales = ref({
 	showSolution: false,
 	attempts: 0,
 	isCorrect: false,
+	dialog: false,
 });
 
 const cube = ref({
@@ -521,6 +697,7 @@ const cube = ref({
 	showSolution: false,
 	attempts: 0,
 	isCorrect: false,
+	dialog: false,
 });
 
 const pizzeria = ref({
@@ -529,6 +706,7 @@ const pizzeria = ref({
 	showSolution: false,
 	attempts: 0,
 	isCorrect: false,
+	dialog: false,
 });
 
 const cafe = ref({
@@ -537,6 +715,27 @@ const cafe = ref({
 	showSolution: false,
 	attempts: 0,
 	isCorrect: false,
+	dialog: false,
+});
+
+const grades = ref({
+	answer: '',
+	error: '',
+	showSolution: false,
+	attempts: 0,
+	isCorrect: false,
+	dialog: false,
+});
+
+const time = ref({
+	hoursAnswer: '',
+	minutesAnswer: '',
+	hoursError: '',
+	minutesError: '',
+	showSolution: false,
+	attempts: 0,
+	isCorrect: false,
+	dialog: false,
 });
 
 function checkBirthdayAnswer() {
@@ -552,11 +751,6 @@ function checkBirthdayAnswer() {
 
 	birthday.value.attempts++;
 	birthday.value.error = 'Неправильна відповідь. Спробуйте ще раз';
-
-	if (birthday.value.attempts >= 3) {
-		birthday.value.showSolution = true;
-		birthday.value.isCorrect = false;
-	}
 }
 
 function checkConverterAnswers() {
@@ -580,11 +774,6 @@ function checkConverterAnswers() {
 	}
 	if (Math.abs(userEur - expectedEur) > 0.01) {
 		converter.value.eurError = 'Неправильна сума в євро';
-	}
-
-	if (converter.value.attempts >= 3) {
-		converter.value.showSolution = true;
-		converter.value.isCorrect = false;
 	}
 }
 
@@ -610,11 +799,6 @@ function checkFlowerbedAnswers() {
 	if (userPlants !== expectedPlants) {
 		flowerbed.value.plantsError = 'Неправильна кількість саджанців';
 	}
-
-	if (flowerbed.value.attempts >= 3) {
-		flowerbed.value.showSolution = true;
-		flowerbed.value.isCorrect = false;
-	}
 }
 
 function checkSquirrelsAnswers() {
@@ -639,11 +823,6 @@ function checkSquirrelsAnswers() {
 	if (userRemainingNuts !== expectedRemainingNuts) {
 		squirrels.value.remainingNutsError = 'Неправильна кількість горіхів, що залишились';
 	}
-
-	if (squirrels.value.attempts >= 3) {
-		squirrels.value.showSolution = true;
-		squirrels.value.isCorrect = false;
-	}
 }
 
 function checkScalesAnswer() {
@@ -661,11 +840,6 @@ function checkScalesAnswer() {
 
 	scales.value.attempts++;
 	scales.value.error = 'Неправильна відповідь. Спробуйте ще раз';
-
-	if (scales.value.attempts >= 3) {
-		scales.value.showSolution = true;
-		scales.value.isCorrect = false;
-	}
 }
 
 function checkCubeAnswers() {
@@ -691,11 +865,6 @@ function checkCubeAnswers() {
 	if (Math.abs(userArea - expectedArea) > 0.01) {
 		cube.value.areaError = 'Неправильна площа поверхні куба';
 	}
-
-	if (cube.value.attempts >= 3) {
-		cube.value.showSolution = true;
-		cube.value.isCorrect = false;
-	}
 }
 
 function checkPizzeriaAnswer() {
@@ -714,11 +883,6 @@ function checkPizzeriaAnswer() {
 
 	pizzeria.value.attempts++;
 	pizzeria.value.error = 'Неправильна відповідь. Спробуйте ще раз';
-
-	if (pizzeria.value.attempts >= 3) {
-		pizzeria.value.showSolution = true;
-		pizzeria.value.isCorrect = false;
-	}
 }
 
 function checkCafeAnswer() {
@@ -734,10 +898,46 @@ function checkCafeAnswer() {
 
 	cafe.value.attempts++;
 	cafe.value.error = 'Неправильна відповідь. Спробуйте ще раз';
+}
 
-	if (cafe.value.attempts >= 3) {
-		cafe.value.showSolution = true;
-		cafe.value.isCorrect = false;
+function checkGradesAnswer() {
+	const total = 10 + 11 + 9 + 12 + 10;
+	const expectedAnswer = total / 5;
+	const userAnswer = parseFloat(grades.value.answer);
+
+	if (Math.abs(userAnswer - expectedAnswer) <= 0.01) {
+		grades.value.error = '';
+		grades.value.showSolution = true;
+		grades.value.isCorrect = true;
+		return;
+	}
+
+	grades.value.attempts++;
+	grades.value.error = 'Неправильна відповідь. Спробуйте ще раз';
+}
+
+function checkTimeAnswers() {
+	const totalMinutes = 150;
+	const expectedHours = Math.floor(totalMinutes / 60);
+	const expectedMinutes = totalMinutes % 60;
+	const userHours = parseInt(time.value.hoursAnswer);
+	const userMinutes = parseInt(time.value.minutesAnswer);
+
+	if (userHours === expectedHours && userMinutes === expectedMinutes) {
+		time.value.hoursError = '';
+		time.value.minutesError = '';
+		time.value.showSolution = true;
+		time.value.isCorrect = true;
+		return;
+	}
+
+	time.value.attempts++;
+
+	if (userHours !== expectedHours) {
+		time.value.hoursError = 'Неправильна кількість годин';
+	}
+	if (userMinutes !== expectedMinutes) {
+		time.value.minutesError = 'Неправильна кількість хвилин';
 	}
 }
 </script>
