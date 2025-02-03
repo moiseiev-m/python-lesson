@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useDisplay } from 'vuetify';
 import { useTheme } from 'vuetify';
+import { usePagesStore } from '@/stores/pages';
 
 const theme = useTheme();
 const isDark = ref(theme.global.current.value.dark);
@@ -12,25 +13,27 @@ const toggleTheme = () => {
 	isDark.value = !isDark.value;
 };
 
-const drawer = ref(null);
+const drawer = ref(true);
 const router = useRouter();
 const route = useRoute();
 const { mobile, mdAndUp } = useDisplay();
+const pagesStore = usePagesStore();
 
 const menuItems = [
-	{ title: 'Головна', icon: 'mdi-home', to: '/' },
-	{ title: 'Вступ', icon: 'mdi-book-open-variant', to: '/intro' },
-	{ title: 'Встановлення Python', icon: 'mdi-download', to: '/installation' },
-	{ title: 'Основи Python', icon: 'mdi-language-python', to: '/basics' },
-	{ title: 'Змінні та типи даних', icon: 'mdi-variable', to: '/variables' },
+	{ title: 'Головна', icon: 'mdi-home', path: '/' },
+	{ title: 'Вступ', icon: 'mdi-book-open-variant', path: '/intro' },
+	{ title: 'Встановлення', icon: 'mdi-download', path: '/installation' },
+	{ title: 'Основи', icon: 'mdi-language-python', path: '/basics' },
+	{ title: 'Змінні', icon: 'mdi-variable', path: '/variables' },
+	{ title: 'Практичні роботи', icon: 'mdi-test-tube', path: '/tests' },
 	{
-		title: 'Практичні завдання',
-		icon: 'mdi-code-braces',
+		title: 'Практика',
+		icon: 'mdi-code-tags',
 		items: [
-			{ title: 'Консольні проєкти', to: '/practice/console' },
-			{ title: 'Консольні проєкти з розгалуженнями', to: '/practice/branches' },
-			{ title: 'Підпрограми', to: '/practice/functions' },
-			{ title: 'Віконні проєкти', to: '/practice/gui' },
+			{ title: 'Консольні проєкти', path: '/practice/console' },
+			{ title: 'Розгалуження', path: '/practice/console-branching' },
+			{ title: 'Функції', path: '/practice/functions' },
+			{ title: 'Віконні програми', path: '/practice/window' },
 		],
 	},
 ];
@@ -42,25 +45,22 @@ const isCurrentRoute = computed(() => (path) => {
 
 <template>
 	<v-app>
-		<v-navigation-drawer v-model="drawer" :permanent="mdAndUp" :temporary="!mdAndUp" :location="mdAndUp ? 'left' : 'start'" width="300">
-			<v-list nav density="compact">
-				<template v-for="item in menuItems" :key="item.title">
-					<v-list-group v-if="item.items">
-						<template v-slot:activator="{ props }">
-							<v-list-item v-bind="props" :prepend-icon="item.icon" :title="item.title"></v-list-item>
-						</template>
-						<v-list-item v-for="subItem in item.items" :key="subItem.title" :to="subItem.to" :title="subItem.title" :active="isCurrentRoute(subItem.to)" link class="pl-4">
-							<template v-slot:append v-if="isCurrentRoute(subItem.to)">
-								<v-icon color="primary" icon="mdi-check-circle"></v-icon>
-							</template>
-						</v-list-item>
-					</v-list-group>
+		<v-navigation-drawer v-model="drawer" permanent>
+			<v-list>
+				<v-list-item to="/" :title="'Головна'" prepend-icon="mdi-home" />
 
-					<v-list-item v-else :to="item.to" :prepend-icon="item.icon" :title="item.title" :active="isCurrentRoute(item.to)" link @click="mobile ? (drawer = false) : null" class="rounded-lg mb-1">
-						<template v-slot:append v-if="isCurrentRoute(item.to)">
-							<v-icon color="primary" icon="mdi-check-circle"></v-icon>
+				<template v-for="item in menuItems.slice(1)" :key="item.title">
+					<!-- Звичайні пункти меню -->
+					<v-list-item v-if="!item.items && pagesStore.pages[item.path]" :to="item.path" :title="item.title" :prepend-icon="item.icon" />
+
+					<!-- Групи меню -->
+					<v-list-group v-else-if="item.items" :value="item.title">
+						<template v-slot:activator="{ props }">
+							<v-list-item v-bind="props" :title="item.title" :prepend-icon="item.icon" />
 						</template>
-					</v-list-item>
+
+						<v-list-item v-for="subItem in item.items" :key="subItem.title" v-show="pagesStore.pages[subItem.path]" :to="subItem.path" :title="subItem.title" />
+					</v-list-group>
 				</template>
 			</v-list>
 		</v-navigation-drawer>

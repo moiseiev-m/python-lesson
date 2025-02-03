@@ -1,10 +1,8 @@
 <script setup>
 import { ref } from 'vue';
-import variablesExamples from '@/assets/pdf/variables-examples.pdf';
 import BaseLayout from '@/components/BaseLayout.vue';
 import OperatorsTable from '@/components/OperatorsTable.vue';
 import FunctionsList from '@/components/FunctionsList.vue';
-import '@/assets/styles/global.css';
 
 const functions = ref([
 	{
@@ -132,7 +130,7 @@ const comparisonOperators = [
 
 		<template #content>
 			<!-- Functions Section -->
-			<FunctionsList title="Вбудовані функції для роботи з типами даних" :functions="functions" />
+			<FunctionsList title="Вбудовані функції для роботи з типами даних" :functions="functions" class="mb-4" />
 
 			<!-- Operators Section -->
 			<OperatorsTable title="Арифметичні оператори" :operators="arithmeticOperators" />

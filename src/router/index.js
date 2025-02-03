@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { auth } from '@/firebase';
+import { usePagesStore } from '@/stores/pages';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,11 +9,6 @@ const router = createRouter({
 			path: '/',
 			name: 'home',
 			component: () => import('../views/HomeView.vue'),
-		},
-		{
-			path: '/intro',
-			name: 'intro',
-			component: () => import('../views/IntroView.vue'),
 		},
 		{
 			path: '/installation',
@@ -39,7 +36,7 @@ const router = createRouter({
 			component: () => import('../views/practice/ConsoleProjectsView.vue'),
 		},
 		{
-			path: '/practice/branches',
+			path: '/practice/console-branching',
 			name: 'console-branches',
 			component: () => import('../views/practice/ConsoleBranchesView.vue'),
 		},
@@ -49,9 +46,20 @@ const router = createRouter({
 			component: () => import('../views/practice/FunctionsProjectsView.vue'),
 		},
 		{
-			path: '/practice/gui',
+			path: '/practice/window',
 			name: 'gui-projects',
 			component: () => import('../views/practice/GuiProjectsView.vue'),
+		},
+		{
+			path: '/admin',
+			name: 'admin',
+			component: () => import('../views/AdminView.vue'),
+		},
+		{
+			path: '/admin/dashboard',
+			name: 'admin-dashboard',
+			component: () => import('../views/AdminDashboardView.vue'),
+			meta: { requiresAuth: true },
 		},
 		{
 			path: '/:pathMatch(.*)*',
@@ -59,6 +67,28 @@ const router = createRouter({
 			redirect: '/',
 		},
 	],
+});
+
+// Navigation guard
+router.beforeEach((to, from, next) => {
+	const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+	const isAuthenticated = auth.currentUser;
+	const pagesStore = usePagesStore();
+
+	// Перевіряємо чи сторінка вимкнена
+	if (to.path !== '/' && to.path !== '/admin' && to.path !== '/admin/dashboard') {
+		if (!pagesStore.pages[to.path]) {
+			next('/');
+			return;
+		}
+	}
+
+	// Перевіряємо авторизацію для адмін-панелі
+	if (requiresAuth && !isAuthenticated) {
+		next('/admin');
+	} else {
+		next();
+	}
 });
 
 export default router;
