@@ -30,7 +30,10 @@ onMounted(() => {
 <template>
 	<BaseLayout>
 		<template #title>
-			<h2 class="text-h4 mb-6">Адміністративна панель</h2>
+			<div class="d-flex align-center justify-space-between">
+				<h2 class="text-h4">Адміністративна панель</h2>
+				<v-btn v-if="authStore.user" color="primary" to="/admin/dashboard">Перейти до панелі керування</v-btn>
+			</div>
 		</template>
 
 		<template #content>
@@ -63,7 +66,8 @@ onMounted(() => {
 					<p>Електронна пошта: {{ authStore.user.email }}</p>
 				</v-card-text>
 				<v-card-actions>
-					<v-btn color="primary" @click="authStore.logout">Вийти з системи</v-btn>
+					<v-btn color="primary" to="/admin/dashboard" class="mr-2">Перейти до панелі керування</v-btn>
+					<v-btn color="error" @click="authStore.logout">Вийти з системи</v-btn>
 				</v-card-actions>
 			</v-card>
 		</template>
