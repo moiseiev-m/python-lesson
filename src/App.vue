@@ -25,6 +25,9 @@ const menuItems = [
 	{ title: 'Встановлення', icon: 'mdi-download', path: '/installation' },
 	{ title: 'Основи', icon: 'mdi-language-python', path: '/basics' },
 	{ title: 'Змінні', icon: 'mdi-variable', path: '/variables' },
+	{ title: 'Розгалуження', icon: 'mdi-source-branch', path: '/branching' },
+	{ title: 'Підпрограми', icon: 'mdi-function', path: '/subprograms' },
+	{ title: 'Віконні проєкти', icon: 'mdi-window-maximize', path: '/gui-projects' },
 	{ title: 'Практичні роботи', icon: 'mdi-test-tube', path: '/tests' },
 	{
 		title: 'Практика',

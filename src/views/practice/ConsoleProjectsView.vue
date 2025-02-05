@@ -107,12 +107,12 @@ const tasks = ref([
 				<v-card class="mx-auto" elevation="2">
 					<v-card-title class="text-h4 font-weight-bold text-center py-4">Консольні проєкти</v-card-title>
 
-					<v-card-actions class="pa-4">
-						<v-btn color="success" :href="pdfGuide" target="_blank" prepend-icon="mdi-file">Детальна інструкцію для задачі "День народження" </v-btn>
-					</v-card-actions>
-
 					<v-card-text class="text-body-1">
-						<v-expansion-panels>
+						<p class="mb-4">
+							<a href="https://ed-info.github.io/epython/" target="_blank">ЄPython - програмувати просто! - https://ed-info.github.io/epython/</a>
+						</p>
+						<v-btn color="success" :href="pdfGuide" target="_blank" prepend-icon="mdi-file">Детальна інструкцію для задачі "День народження" </v-btn>
+						<v-expansion-panels class="mt-4">
 							<v-expansion-panel v-for="(task, index) in tasks" :key="index" :header="task.header" class="mb-2">
 								<v-expansion-panel-title class="text-h5 bg-green text-white"> Завдання {{ index + 1 }}. {{ task.header }}</v-expansion-panel-title>
 								<v-expansion-panel-text>
