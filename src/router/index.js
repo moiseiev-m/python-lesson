@@ -72,6 +72,11 @@ const router = createRouter({
 			meta: { requiresAuth: true },
 		},
 		{
+			path: '/solutions',
+			name: 'solutions',
+			component: () => import('../views/SolutionsView.vue'),
+		},
+		{
 			path: '/:pathMatch(.*)*',
 			name: 'not-found',
 			redirect: '/',
@@ -86,7 +91,7 @@ router.beforeEach((to, from, next) => {
 	const pagesStore = usePagesStore();
 
 	// Перевіряємо чи сторінка вимкнена
-	if (to.path !== '/' && to.path !== '/admin' && to.path !== '/admin/dashboard') {
+	if (to.path !== '/' && to.path !== '/admin' && to.path !== '/admin/dashboard' && to.path !== '/solutions') {
 		if (!pagesStore.pages[to.path]) {
 			next('/');
 			return;

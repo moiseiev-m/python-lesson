@@ -78,6 +78,9 @@ const isCurrentRoute = computed(() => (path) => {
 			<v-btn icon @click="toggleTheme" :title="isDark ? 'Світла тема' : 'Темна тема'">
 				<v-icon>{{ isDark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent' }}</v-icon>
 			</v-btn>
+			<v-btn icon @click="router.push('/solutions')">
+				<v-icon>mdi-lightbulb-on-outline</v-icon>
+			</v-btn>
 		</v-app-bar>
 
 		<v-main :class="mdAndUp ? 'ml-300' : ''">
