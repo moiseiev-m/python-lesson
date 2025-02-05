@@ -26,6 +26,21 @@ const router = createRouter({
 			component: () => import('../views/VariablesView.vue'),
 		},
 		{
+			path: '/branching',
+			name: 'branching',
+			component: () => import('../views/BranchingView.vue'),
+		},
+		{
+			path: '/subprograms',
+			name: 'subprograms',
+			component: () => import('../views/SubprogramsView.vue'),
+		},
+		{
+			path: '/gui-projects',
+			name: 'gui-theory',
+			component: () => import('../views/WindowProjectsView.vue'),
+		},
+		{
 			path: '/practice/console',
 			name: 'console-projects',
 			component: () => import('../views/practice/ConsoleProjectsView.vue'),
@@ -42,7 +57,7 @@ const router = createRouter({
 		},
 		{
 			path: '/practice/window',
-			name: 'gui-projects',
+			name: 'gui-practice',
 			component: () => import('../views/practice/GuiProjectsView.vue'),
 		},
 		{
