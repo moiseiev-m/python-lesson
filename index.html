@@ -1,12 +1,27 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<link rel="icon" href="/python-lesson/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<title>Python підказки</title>
-		<script type="module" crossorigin src="/python-lesson/assets/index-Dzk13zlm.js"></script>
-		<link rel="stylesheet" crossorigin href="/python-lesson/assets/style-CNJrNOQb.css">
+		<title>Python Lesson</title>
+		<!-- Скрипт для GitHub Pages маршрутизації -->
+		<script type="text/javascript">
+			(function (l) {
+				if (l.search[1] === '/') {
+					var decoded = l.search
+						.slice(1)
+						.split('&')
+						.map(function (s) {
+							return s.replace(/~and~/g, '&');
+						})
+						.join('?');
+					window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
+				}
+			})(window.location);
+		</script>
+		<script type="module" crossorigin src="/python-lesson/assets/index-C3YYhXq9.js"></script>
+		<link rel="stylesheet" crossorigin href="/python-lesson/assets/style-BKiA6vpA.css">
 	</head>
 	<body>
 		<div id="app"></div>
