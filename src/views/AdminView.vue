@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import BaseLayout from '@/components/BaseLayout.vue';
@@ -10,6 +10,9 @@ const router = useRouter();
 const email = ref('');
 const password = ref('');
 const showPassword = ref(false);
+
+// Обчислювана властивість для перевірки статусу адміністратора
+const isAdmin = computed(() => authStore.isAdmin);
 
 const login = async () => {
 	try {
@@ -61,9 +64,10 @@ onMounted(() => {
 			</v-card>
 
 			<v-card v-else>
-				<v-card-title>Ви увійшли як адміністратор</v-card-title>
+				<v-card-title>Ви увійшли як {{ isAdmin ? 'адміністратор' : 'користувач' }}</v-card-title>
 				<v-card-text>
 					<p>Електронна пошта: {{ authStore.user.email }}</p>
+					<v-chip v-if="isAdmin" color="success" class="mt-2">Адміністратор</v-chip>
 				</v-card-text>
 				<v-card-actions>
 					<v-btn color="primary" to="/admin/dashboard" class="mr-2">Перейти до панелі керування</v-btn>

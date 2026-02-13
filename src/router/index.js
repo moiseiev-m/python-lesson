@@ -69,7 +69,7 @@ const router = createRouter({
 			path: '/admin/dashboard',
 			name: 'admin-dashboard',
 			component: () => import('../views/AdminDashboardView.vue'),
-			meta: { requiresAuth: true },
+			meta: { requiresAuth: true, requiresAdmin: true },
 		},
 		{
 			path: '/solutions',
@@ -87,8 +87,12 @@ const router = createRouter({
 // Navigation guard
 router.beforeEach((to, from, next) => {
 	const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+	const requiresAdmin = to.matched.some((record) => record.meta.requiresAdmin);
 	const isAuthenticated = auth.currentUser;
 	const pagesStore = usePagesStore();
+
+	// Перевірка, чи користувач є адміністратором через localStorage
+	const isAdmin = localStorage.getItem('isAdmin') === 'true';
 
 	// Перевіряємо чи сторінка вимкнена
 	if (to.path !== '/' && to.path !== '/admin' && to.path !== '/admin/dashboard' && to.path !== '/solutions') {
@@ -98,9 +102,13 @@ router.beforeEach((to, from, next) => {
 		}
 	}
 
-	// Перевіряємо авторизацію для адмін-панелі
+	// Перевіряємо авторизацію для захищених маршрутів
 	if (requiresAuth && !isAuthenticated) {
 		next('/admin');
+	}
+	// Перевіряємо права адміністратора для захищених маршрутів
+	else if (requiresAdmin && !isAdmin) {
+		next('/');
 	} else {
 		next();
 	}

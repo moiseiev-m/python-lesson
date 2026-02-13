@@ -9,6 +9,9 @@ const authStore = useAuthStore();
 const pagesStore = usePagesStore();
 const router = useRouter();
 
+// Обчислювана властивість для перевірки статусу адміністратора
+const isAdmin = computed(() => authStore.isAdmin);
+
 const pageItems = computed(() => [
 	{ title: 'Консольні проєкти', path: '/practice/console', category: 'Практичні завдання' },
 	{ title: 'Консольні проєкти з розгалуженням', path: '/practice/console-branching', category: 'Практичні завдання' },
@@ -24,8 +27,11 @@ const pageItems = computed(() => [
 ]);
 
 onMounted(() => {
+	// Перевіряємо, чи користувач авторизований та чи є він адміністратором
 	if (!authStore.user) {
 		router.push('/admin');
+	} else if (!authStore.isAdmin) {
+		router.push('/'); // Перенаправляємо не-адміністраторів на головну сторінку
 	}
 });
 </script>
@@ -35,12 +41,17 @@ onMounted(() => {
 		<template #title>
 			<div class="d-flex align-center justify-space-between">
 				<h2 class="text-h4">Керування сторінками</h2>
-				<v-btn color="primary" @click="authStore.logout">Вийти</v-btn>
+				<div>
+					<v-chip v-if="isAdmin" color="success" class="mr-4">Адміністратор</v-chip>
+					<v-btn color="primary" @click="authStore.logout">Вийти</v-btn>
+				</div>
 			</div>
 		</template>
 
 		<template #content>
-			<v-card>
+			<v-alert v-if="!isAdmin" type="warning" class="mb-4"> Ви не маєте прав адміністратора для керування сторінками </v-alert>
+
+			<v-card v-if="isAdmin">
 				<v-data-table
 					:headers="[
 						{ title: 'Назва сторінки', key: 'title', sortable: true },
