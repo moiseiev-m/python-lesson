@@ -12,7 +12,6 @@ export const usePagesStore = defineStore('pages', () => {
 		'/practice/arrays': true,
 		'/variables': true,
 		'/arrays': true,
-		'/tests': true,
 		'/basics': true,
 		'/installation': true,
 	});
