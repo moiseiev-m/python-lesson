@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import BaseLayout from '@/components/BaseLayout.vue';
@@ -17,7 +17,8 @@ const isAdmin = computed(() => authStore.isAdmin);
 const login = async () => {
 	try {
 		await authStore.login(email.value, password.value);
-		router.push('/admin/dashboard');
+		await nextTick();
+		await router.push('/admin/dashboard');
 	} catch (error) {
 		console.error('Помилка входу:', error);
 	}

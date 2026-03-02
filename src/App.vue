@@ -27,6 +27,7 @@ const menuItems = [
 	{ title: 'Змінні', icon: 'mdi-variable', path: '/variables' },
 	{ title: 'Розгалуження', icon: 'mdi-source-branch', path: '/branching' },
 	{ title: 'Підпрограми', icon: 'mdi-function', path: '/subprograms' },
+	{ title: 'Масиви', icon: 'mdi-format-list-bulleted', path: '/arrays' },
 	{ title: 'Віконні проєкти', icon: 'mdi-window-maximize', path: '/gui-projects' },
 	{ title: 'Практичні роботи', icon: 'mdi-test-tube', path: '/tests' },
 	{
@@ -37,6 +38,7 @@ const menuItems = [
 			{ title: 'Розгалуження', path: '/practice/console-branching' },
 			{ title: 'Функції', path: '/practice/functions' },
 			{ title: 'Віконні програми', path: '/practice/window' },
+			{ title: 'Масиви', path: '/practice/arrays' },
 		],
 	},
 ];
