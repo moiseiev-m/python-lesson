@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { auth } from '@/firebase';
 import { usePagesStore } from '@/stores/pages';
+import { useAuthStore } from '@/stores/auth';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,6 +37,11 @@ const router = createRouter({
 			component: () => import('../views/SubprogramsView.vue'),
 		},
 		{
+			path: '/arrays',
+			name: 'arrays',
+			component: () => import('../views/ArraysView.vue'),
+		},
+		{
 			path: '/gui-projects',
 			name: 'gui-theory',
 			component: () => import('../views/WindowProjectsView.vue'),
@@ -59,6 +65,11 @@ const router = createRouter({
 			path: '/practice/window',
 			name: 'gui-practice',
 			component: () => import('../views/practice/GuiProjectsView.vue'),
+		},
+		{
+			path: '/practice/arrays',
+			name: 'arrays-projects',
+			component: () => import('../views/practice/ArraysProjectsView.vue'),
 		},
 		{
 			path: '/admin',
@@ -88,11 +99,12 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 	const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
 	const requiresAdmin = to.matched.some((record) => record.meta.requiresAdmin);
-	const isAuthenticated = auth.currentUser;
+	const authStore = useAuthStore();
 	const pagesStore = usePagesStore();
-
-	// Перевірка, чи користувач є адміністратором через localStorage
-	const isAdmin = localStorage.getItem('isAdmin') === 'true';
+	// Використовуємо і auth.currentUser, і authStore.user — після логіну store оновлюється раніше ніж Firebase
+	const isAuthenticated = auth.currentUser ?? authStore.user;
+	// Перевіряємо і store, і localStorage — після логіну store вже оновлений, localStorage може запізнитись
+	const isAdmin = authStore.isAdmin || localStorage.getItem('isAdmin') === 'true';
 
 	// Перевіряємо чи сторінка вимкнена
 	if (to.path !== '/' && to.path !== '/admin' && to.path !== '/admin/dashboard' && to.path !== '/solutions') {
