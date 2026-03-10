@@ -10,6 +10,8 @@ export const usePagesStore = defineStore('pages', () => {
 		'/practice/functions': true,
 		'/practice/window': true,
 		'/practice/arrays': true,
+		'/practice/loops': true,
+		'/loops': true,
 		'/variables': true,
 		'/arrays': true,
 		'/basics': true,

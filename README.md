@@ -1,29 +1,43 @@
-# python-guide
+# Python підказки
 
-This template should help get you started developing with Vue 3 in Vite.
+Веб-підручник з Python для учнів: теорія та практичні завдання. SPA на Vue 3 + Vite + Vuetify, бекенд-налаштування в Firebase (Auth, Firestore).
 
-## Recommended IDE Setup
+## Стек
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Vue 3** (Composition API), **Vue Router**, **Pinia**
+- **Vuetify 3**, **Vite 6**
+- **Firebase** (Authentication, Firestore — налаштування сторінок, адмін)
 
-## Customize configuration
+## Структура
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- `src/views/` — сторінки теорії (VariablesView, BranchingView, ArraysView тощо) та практики (`practice/`)
+- `src/components/` — BaseLayout, TaskChecker, OperatorsTable, FunctionsList
+- `src/stores/` — auth, pages (видимість сторінок з Firestore)
+- `src/firebase/` — ініціалізація Firebase
+- `src/assets/pdf/` — PDF для завдань
 
-## Project Setup
+## Команди
 
-```sh
+```bash
+# Залежності
 npm install
-```
 
-### Compile and Hot-Reload for Development
-
-```sh
+# Розробка (локально)
 npm run dev
-```
 
-### Compile and Minify for Production
-
-```sh
+# Збірка для продакшену
 npm run build
+
+# Перегляд збірки
+npm run preview
 ```
+
+## Деплой
+
+- **GitHub Pages**: при пуші в гілку `master` запускається workflow `.github/workflows/deploy.yml` (build → deploy).
+- Сайт: https://moiseiev-m.github.io/python-lesson/
+- У репозиторії: **Settings → Pages → Source: GitHub Actions**; у **Environments → github-pages** дозволені гілки `master` та `gh-pages`.
+
+## Локальна розробка
+
+Потрібен **Node.js 18+**. Після `npm install` та `npm run dev` додаток доступний на `http://localhost:5173` (або інший порт з виводу Vite).
