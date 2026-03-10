@@ -42,6 +42,11 @@ const router = createRouter({
 			component: () => import('../views/ArraysView.vue'),
 		},
 		{
+			path: '/loops',
+			name: 'loops',
+			component: () => import('../views/LoopsView.vue'),
+		},
+		{
 			path: '/gui-projects',
 			name: 'gui-theory',
 			component: () => import('../views/WindowProjectsView.vue'),
@@ -70,6 +75,11 @@ const router = createRouter({
 			path: '/practice/arrays',
 			name: 'arrays-projects',
 			component: () => import('../views/practice/ArraysProjectsView.vue'),
+		},
+		{
+			path: '/practice/loops',
+			name: 'loops-projects',
+			component: () => import('../views/practice/LoopsProjectsView.vue'),
 		},
 		{
 			path: '/admin',
