@@ -68,7 +68,7 @@ const tasks = ref([
 		<v-row justify="center">
 			<v-col cols="12" md="8">
 				<v-card class="mx-auto" elevation="2">
-					<v-card-title class="text-h4 font-weight-bold text-center py-4"> Практика: розгалуження </v-card-title>
+					<v-card-title class="text-h4 font-weight-bold text-center py-4"> Розгалуження </v-card-title>
 
 					<v-card-text class="text-body-1">
 						<p class="mb-4">
